@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<header th:replace="header::header-fragment"></header>
+<body class="hold-transition sidebar-mini">
+
+<!--div defines a section in a document-->
+<div class="wrapper">
+  <!-- 引入页面头header-fragment -->
+  <div th:replace="header::header-nav"></div>
+  <!-- 引入工具栏sidebar-fragment -->
+  <div th:replace="sidebar::sidebar-fragment(${path})"></div>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- Main content -->
+    <div class="content">
+      <div class="card card-primary card-outline">
+        <div class="card-header">
+          <nav>
+            <a th:href="@{/}" class="brand-link"></a>
+            <span class="brand-text font-weight-light">首页</span>
+          </nav>
+        </div> <!-- /.card-body -->
+        <div class="card-body">
+          <div style="padding: 10px 0 20px 10px;">
+            页面布局制作及跳转逻辑实现
+          </div>
+        </div>
+        <div class="card-body">
+          <nav>
+            <a th:href="${pathError}" class="brand-link"></a>
+            <span class="brand-text font-weight-light">显示错误页面</span
+          </nav>
+        </div>
+
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <!-- 引入页脚footer-fragment -->
+</div>
+  <div th:replace="footer::footer-fragment"></div>
+<!-- jQuery -->
+<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script th:src="@{/plugins/jquery-ui/jquery-ui.min.js}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/dist/js/adminlte.min.js}"></script>
+</body>
+</html>
