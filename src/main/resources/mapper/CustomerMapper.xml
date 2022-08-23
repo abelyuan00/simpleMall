@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.demo.Dao.customerDao">
-    <resultMap type="com.example.demo.Entity.customer" id="UserResult">
+<mapper namespace="com.example.simpleMall.Dao.customerDao">
+    <resultMap type="com.example.simpleMall.Entity.Customer" id="UserResult">
         <result property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="passwd" column="passwd"/>
@@ -12,19 +12,19 @@
         order by id desc
     </select>
 
-    <insert id="insertUser" parameterType="com.example.demo.Entity.customer">
+    <insert id="insertUser" parameterType="com.example.simpleMall.Entity.Customer">
         insert into tb_user(name,passwd)
         values(#{name},#{passwd})
     </insert>
 
-    <update id="updUser" parameterType="com.example.demo.Entity.customer">
+    <update id="updateUser" parameterType="com.example.simpleMall.Entity.Customer">
         update tb_user
         set
             name=#{name},passwd=#{passwd}
         where id=#{id}
     </update>
 
-    <delete id="delUser" parameterType="int">
+    <delete id="removeUser" parameterType="int">
         delete from tb_user where id=#{id}
     </delete>
 </mapper>
