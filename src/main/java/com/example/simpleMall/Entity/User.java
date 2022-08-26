@@ -4,52 +4,47 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.text.SimpleDateFormat;
-import java.util.Base64;
 import java.util.Date;
 
-@MappedSuperclass
+@Entity
 @Getter
 @Setter
-public class BasicUser  {
+public class User {
 
     @Id
     @Column(name = "id", nullable = false)
-    Long id;
+    private Long id;
 
     @Column
-    String Type;
+    private String code;
 
     @Column
-    Integer uuid ;
+    private Date createdTime;
 
     @Column
-    String code;
+    private Date modifiedTime;
 
     @Column
-    Date createdTime;
+    private String passwd;
 
     @Column
-    Date modifiedTime;
+    private String name;
 
+    //locked or normal
     @Column
-    String passwd;
+    private String status;
+
+    //customer or admin
+    @Column
+    private String role;
 
     public String getCode(){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         sdf.format(new Date());
-        return new String(sdf.toString()+uuid);
+        return new String(sdf.toString()+id+role);
     }
-
-    public Integer getUUid(){
-        return (int) Math.random();
-    }
-
-    public String passwdEncryption(String passwd){
-        return Base64.getEncoder().encodeToString(String.valueOf(passwd).getBytes());
-
-    }
-
 }
