@@ -3,14 +3,13 @@ package com.example.simpleMall.Entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Getter
 @Setter
-public class Member extends User{
+@Table
+public class Admin extends User{
 
-    @Column
-    private Integer membershipLevel;
 }

@@ -1,34 +1,35 @@
 package com.example.simpleMall.Entity;
 
+import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@Entity
+@MappedSuperclass
 @Getter
 @Setter
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
     @Column
+    @NotNull
     private String code;
 
     @Column
     private Date createdTime;
 
     @Column
-    private Date modifiedTime;
+    private Date updateTime;
 
     @Column
+    @NotNull
     private String passwd;
 
     @Column
@@ -36,15 +37,16 @@ public class User {
 
     //locked or normal
     @Column
-    private String status;
+    private String status = "normal";
 
     //customer or admin
     @Column
-    private String role;
+    @NotNull
+    private String role = "customer";
 
     public String getCode(){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-        sdf.format(new Date());
-        return new String(sdf.toString()+id+role);
+        String date =sdf.format(new Date());
+        return new String(date+name+role);
     }
 }
