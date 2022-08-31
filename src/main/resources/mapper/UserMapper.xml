@@ -9,15 +9,16 @@
     </resultMap>
 
 
+
     <insert id="insertCustomer" parameterType="com.example.simpleMall.Entity.Customer">
-        insert into customer(name,passwd,code,role,status,created_time,update_time)
-        values(#{name},#{passwd},#{code},#{role},#{status},CURRENT_TIME,CURRENT_TIME)
+        insert into customer(login_name,name,password,code,role,status,created_time,update_time)
+        values(#{loginName},#{name},#{password},#{code},#{role},#{status},CURRENT_TIME,CURRENT_TIME)
     </insert>
 
     <update id="updateCustomer" parameterType="com.example.simpleMall.Entity.Customer">
         update customer
         set
-            name=#{name},passwd=#{passwd},update_time=CURRENT_TIME
+            name=#{name},password=#{password},update_time=CURRENT_TIME
         where id=#{id}
     </update>
 
@@ -26,18 +27,19 @@
     </delete>
 
     <insert id="insertAdmin" parameterType="com.example.simpleMall.Entity.Admin">
-        insert into admin(name,passwd,code,role,status,created_time,update_time)
-        values(#{name},#{passwd},#{code},#{role},#{status},CURRENT_TIME,CURRENT_TIME)
+        insert into admin(name,password,code,role,status,created_time,update_time)
+        values(#{name},#{password},#{code},#{role},#{status},CURRENT_TIME,CURRENT_TIME)
     </insert>
 
     <update id="updateAdmin" parameterType="com.example.simpleMall.Entity.Admin">
         update admin
         set
-            name=#{name},passwd=#{passwd},updateTime=CURRENT_TIME
+            name=#{name},password=#{password},updateTime=CURRENT_TIME
         where id=#{id}
     </update>
 
     <delete id="removeAdmin" parameterType="int">
         delete from admin where id=#{id}
     </delete>
+
 </mapper>

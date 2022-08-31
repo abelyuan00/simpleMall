@@ -3,6 +3,7 @@ package com.example.simpleMall.Entity;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
@@ -19,10 +20,6 @@ public class User {
     private Long id;
 
     @Column
-    @NotNull
-    private String code;
-
-    @Column
     private Date createdTime;
 
     @Column
@@ -30,10 +27,14 @@ public class User {
 
     @Column
     @NotNull
-    private String passwd;
+    private String password;
 
     @Column
-    private String name;
+    @NotNull
+    private String code;
+
+    @Column(unique = true,nullable = false)
+    private String loginName;
 
     //locked or normal
     @Column
@@ -44,9 +45,15 @@ public class User {
     @NotNull
     private String role = "customer";
 
-    public String getCode(){
+    public void generateCode(){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         String date =sdf.format(new Date());
-        return new String(date+name+role);
+        code = date+loginName+role;
+    }
+
+    public void setPassword(String raw){
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        password = encoder.encode(raw);
+        //        Boolean isPasswordMatches = encoder.matches("123456", password);
     }
 }

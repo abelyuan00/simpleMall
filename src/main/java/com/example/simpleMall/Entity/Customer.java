@@ -21,5 +21,9 @@ public class Customer extends User{
     @Column
     private String address;
 
+    @Column
+    private String name;
+
+
 
 }
