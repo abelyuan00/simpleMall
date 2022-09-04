@@ -2,51 +2,56 @@ package com.example.simpleMall.Controller;
 
 
 import com.example.simpleMall.Dao.UserDao;
+import com.example.simpleMall.Entity.Admin;
 import com.example.simpleMall.Entity.Customer;
 import com.example.simpleMall.Entity.User;
+import com.example.simpleMall.service.AdminService;
+import com.example.simpleMall.service.implementation.AdminServiceImplementation;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.Locale;
 
-@RestController
+@Controller
 public class IndexController {
 
+
     @Resource
-    UserDao userDao;
+    AdminServiceImplementation AdminServiceImplementation;
 
     @GetMapping({"/login"})
-    public String login(){
+    public String login() {
         return "login";
     }
 
-    @GetMapping("/insert")
-    public Boolean insert(String name, String password,String loginName) {
-        if (StringUtils.isEmpty(name) || StringUtils.isEmpty(password)) {
-            return false;
+    @PostMapping(value = "/login")
+    public String login(@RequestParam("loginName") String loginName,
+                        @RequestParam("password") String password,
+                        HttpSession session) {
+        if (StringUtils.isEmpty(loginName) || StringUtils.isEmpty(password)) {
+            session.setAttribute("errorMsg", "用户名或密码不能为空");
+            return "login";
         }
-        Customer customer = new Customer();
-        customer.setName(name);
-        customer.setLoginName(loginName);
-        customer.generateCode();
-        customer.setPassword(password);
-        customer.setCreatedTime(new Date());
-        customer.setUpdateTime(customer.getCreatedTime());
-        userDao.insertCustomer(customer);
-        return true;
+        Admin admin = AdminServiceImplementation.login(loginName, password);
+        if (admin != null) {
+            session.setAttribute("adminCode", admin.getAdminCode());
+            session.setAttribute("adminId", admin.getId());
+            //session过期时间设置为7200秒 即两小时
+            session.setMaxInactiveInterval(60 * 60 * 2);
+            return "redirect:/admin/index";
+        } else {
+            session.setAttribute("errorMsg", "登录失败");
+            return "login";
+        }
     }
 
-//    @GetMapping("/encode")
-//    public String encode(String password) {
-//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-//        String passwordMd5 = encoder.encode(password);
-//        Boolean isPasswordMatches = encoder.matches("123456", passwordMd5);
-//
-//
-//        return isPasswordMatches.toString();
-//    }
 
 }

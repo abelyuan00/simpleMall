@@ -26,11 +26,9 @@ public class User {
     private Date updateTime;
 
     @Column
-    @NotNull
     private String password;
 
     @Column
-    @NotNull
     private String code;
 
     @Column(unique = true,nullable = false)
@@ -39,10 +37,8 @@ public class User {
     //locked or normal
     @Column
     private String status = "normal";
-
     //customer or admin
     @Column
-    @NotNull
     private String role = "customer";
 
     public void generateCode(){

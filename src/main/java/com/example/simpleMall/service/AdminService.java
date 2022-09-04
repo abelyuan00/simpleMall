@@ -1,6 +1,8 @@
 package com.example.simpleMall.service;
 
+import com.example.simpleMall.Entity.Admin;
+
 public interface AdminService {
 
-    void login(String loginName,String password);
+    Admin login(String loginName, String password);
 }

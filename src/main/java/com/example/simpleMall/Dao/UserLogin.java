@@ -1,9 +1,10 @@
 package com.example.simpleMall.Dao;
 
+import com.example.simpleMall.Entity.Admin;
 import org.apache.ibatis.annotations.Param;
 
 public interface UserLogin {
 
-    void loginAdmin(@Param("loginName")String loginName, @Param("password")String password);
+    Admin loginAdmin(@Param("loginName")String loginName);
 
 }

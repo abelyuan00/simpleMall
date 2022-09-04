@@ -6,6 +6,7 @@ import com.example.simpleMall.Entity.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 
 public interface UserDao {
@@ -22,7 +23,12 @@ public interface UserDao {
 
     void removeAdmin(Integer id);
 
-    void login(@Param("loginName")String loginName,@Param("password")String password);
+    Map findAdmin(String loginName);
+
+    Map findCustomer(String loginName);
+
+
+
 
 
 }
