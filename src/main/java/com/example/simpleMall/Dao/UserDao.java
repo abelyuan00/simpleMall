@@ -23,7 +23,7 @@ public interface UserDao {
 
     void removeAdmin(Integer id);
 
-    Map findAdmin(String loginName);
+    Admin findAdmin(String loginName);
 
     Map findCustomer(String loginName);
 

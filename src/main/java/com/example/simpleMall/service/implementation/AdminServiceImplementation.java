@@ -4,6 +4,7 @@ import com.example.simpleMall.Dao.UserDao;
 import com.example.simpleMall.Dao.UserLogin;
 import com.example.simpleMall.Entity.Admin;
 import com.example.simpleMall.service.AdminService;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +22,8 @@ public class AdminServiceImplementation implements AdminService {
     public Admin login(String loginName, String password) {
         Admin admin = null;
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String storedPassword = (String) userDao.findAdmin(loginName).get("password");
-        Boolean isPasswordMatches = encoder.matches(encoder.encode(password), storedPassword);
+        String storedPassword =  userDao.findAdmin(loginName).getPassword();
+        Boolean isPasswordMatches = encoder.matches(password, storedPassword);
         if(isPasswordMatches) {
             admin =  userLogin.loginAdmin(loginName);
         }

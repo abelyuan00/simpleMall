@@ -5,16 +5,16 @@
         <result property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="code" column="code"/>
-        <result property="login_name" column="login_name"/>
+        <result property="loginName" column="login_name"/>
         <result property="password" column="password"/>
     </resultMap>
 
     <resultMap type="com.example.simpleMall.Entity.Admin" id="AdminResult">
         <result property="id" column="id"/>
         <result property="code" column="code"/>
-        <result property="login_name" column="login_name"/>
+        <result property="loginName" column="login_name"/>
         <result property="password" column="password"/>
-        <result property="admin_code" column="admin_code"/>
+        <result property="adminCode" column="admin_code"/>
     </resultMap>
 
 
@@ -43,8 +43,8 @@
     <update id="updateAdmin" parameterType="com.example.simpleMall.Entity.Admin">
         update admin
         set
-            login_name=#{loginName},password=#{password},updateTime=CURRENT_TIME
-        where id=#{id}
+            password=#{password},update_time=CURRENT_TIME,status=#{status}
+        where login_name=#{loginName}
     </update>
 
     <delete id="removeAdmin" parameterType="int">
@@ -54,13 +54,13 @@
 
     <select id="findCustomer" parameterType="String" resultMap="CustomerResult">
         select id,name,code,login_name,password from customer
-        where login_name = #{loginName}
+        where login_name = #{loginName,jdbcType=VARCHAR}
         order by id desc
     </select>
 
     <select id="findAdmin" parameterType="String" resultMap="AdminResult">
-        select id,login_name,code,login_name,password,admin_code from admin
-        where login_name = #{loginName}
+        select id,login_name,code,password,admin_code from admin
+        where login_name = #{loginName,jdbcType=VARCHAR}
         order by id desc
     </select>
 
