@@ -25,11 +25,16 @@ public class IndexController {
 
 
     @Resource
-    AdminServiceImplementation AdminServiceImplementation;
+    AdminService AdminService;
 
     @GetMapping({"/login"})
     public String login() {
         return "login";
+    }
+
+    @GetMapping({"/index"})
+    public String index() {
+        return "index";
     }
 
     @PostMapping(value = "/login")
@@ -40,13 +45,13 @@ public class IndexController {
             session.setAttribute("errorMsg", "用户名或密码不能为空");
             return "login";
         }
-        Admin admin = AdminServiceImplementation.login(loginName, password);
+        Admin admin = AdminService.login(loginName, password);
         if (admin != null) {
             session.setAttribute("adminCode", admin.getAdminCode());
             session.setAttribute("adminId", admin.getId());
             //session过期时间设置为7200秒 即两小时
             session.setMaxInactiveInterval(60 * 60 * 2);
-            return "redirect:/admin/index";
+            return "redirect:/index";
         } else {
             session.setAttribute("errorMsg", "登录失败");
             return "login";

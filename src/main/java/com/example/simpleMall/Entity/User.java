@@ -36,10 +36,10 @@ public class User {
 
     //locked or normal
     @Column
-    private String status = "normal";
+    private String status;
     //customer or admin
     @Column
-    private String role = "customer";
+    private String role;
 
     public void generateCode(){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
@@ -47,7 +47,7 @@ public class User {
         code = date+loginName+role;
     }
 
-    public void setPassword(String raw){
+    public void encodePassword(String raw){
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         password = encoder.encode(raw);
         //        Boolean isPasswordMatches = encoder.matches("123456", password);
