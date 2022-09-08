@@ -26,19 +26,21 @@ public class User {
     private Date updateTime;
 
     @Column
+    @NotNull
     private String password;
 
     @Column
     private String code;
 
-    @Column(unique = true,nullable = false)
+    @Column(unique = true)
+    @NotNull
     private String loginName;
 
     //locked or normal
     @Column
     private String status;
     //customer or admin
-    @Column
+    @Column(nullable = false)
     private String role;
 
     public void generateCode(){

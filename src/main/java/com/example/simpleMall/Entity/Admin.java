@@ -14,6 +14,10 @@ import javax.persistence.UniqueConstraint;
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "loginName" }) })
 public class Admin extends User{
 
+    @Override
+    public void generateCode() {
+
+    }
 
     @Column
     private String adminCode;

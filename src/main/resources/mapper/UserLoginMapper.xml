@@ -14,9 +14,29 @@
         <result property="adminCode" jdbcType="VARCHAR" column="admin_code"/>
     </resultMap>
 
+    <resultMap id="CustomerResult" type="com.example.simpleMall.Entity.Customer" >
+        <id property="id" jdbcType="INTEGER" column="id"/>
+        <result property="code" column="code"/>
+        <result property="createdTime" column="created_time"/>
+        <result property="loginName" jdbcType="VARCHAR" column="login_name"/>
+        <result property="password" jdbcType="VARCHAR" column="password"/>
+        <result property="role" jdbcType="VARCHAR" column="role"/>
+        <result property="status" jdbcType="VARCHAR" column="status"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="address" jdbcType="VARCHAR" column="address"/>
+        <result property="membershipLevel" jdbcType="VARCHAR" column="membership_level"/>
+        <result property="name" jdbcType="VARCHAR" column="name"/>
+    </resultMap>
+
     <select id="loginAdmin" resultMap="AdminResult">
         select *
         from admin
         where login_name = #{loginName,jdbcType=VARCHAR} AND role = 'admin' AND status='normal'
+    </select>
+
+    <select id="loginCustomer" resultMap="CustomerResult">
+        select *
+        from customer
+        where login_name = #{loginName,jdbcType=VARCHAR} AND role = 'customer' AND status='normal'
     </select>
 </mapper>

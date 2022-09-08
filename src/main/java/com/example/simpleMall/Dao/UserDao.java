@@ -27,7 +27,7 @@ public interface UserDao {
 
     Admin findAdmin(@Param("loginName")String loginName);
 
-    Map findCustomer(String loginName);
+    Customer findCustomer(String loginName);
 
 
 
