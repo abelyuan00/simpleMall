@@ -36,57 +36,38 @@ public class IndexController {
         return "login";
     }
 
+    @GetMapping({"/loginAdmin"})
+    public String loginAdmin() {
+        return "loginAdmin";
+    }
+
     @GetMapping({"/index"})
     public String index() {
         return "index";
     }
 
-//    @PostMapping(value = "/loginCustomer")
-//    public String loginCustomer(@RequestParam("loginName") String loginName,
-//                        @RequestParam("password") String password,
-//                        HttpSession session) {
-//        if (StringUtils.isEmpty(loginName) || StringUtils.isEmpty(password)) {
-//            session.setAttribute("errorMsg", "用户名或密码不能为空");
-//            return "login";
-//        }
-//        Customer customer = AdminService.login(loginName, password);
-//        if (admin != null) {
-//            session.setAttribute("adminCode", admin.getAdminCode());
-//            session.setAttribute("adminId", admin.getId());
-//            //session过期时间设置为7200秒 即两小时
-//            session.setMaxInactiveInterval(60 * 60 * 2);
-//            return "redirect:/index";
-//        } else {
-//            session.setAttribute("errorMsg", "登录失败");
-//            return "login";
-//        }
-//    }
 
     @PostMapping(value = "/loginAdmin")
     public String loginAdmin(@RequestParam("loginName") String loginName,
                         @RequestParam("password") String password,
                         HttpSession session) {
-        if (StringUtils.isEmpty(loginName) || StringUtils.isEmpty(password)) {
-            session.setAttribute("errorMsg", "用户名或密码不能为空");
-            return "login";
-        }
         try {
             Admin admin = adminService.login(loginName, password);
             if (admin != null) {
                 session.setAttribute("adminCode", admin.getAdminCode());
-                session.setAttribute("adminId", admin.getId());
-                //session过期时间设置为7200秒 即两小时
+                session.setAttribute("userId", admin.getId());
+                //keep session alive for 7200 second
                 session.setMaxInactiveInterval(60 * 60 * 2);
                 return "redirect:/index";
             }
             else {
                 session.setAttribute("errorMsg", "password do not match");
-                return "login";
+                return "loginAdmin";
             }
         }
         catch (Exception e){
             session.setAttribute("errorMsg", "Can not find user with given login name");
-            return "login";
+            return "loginAdmin";
         }
     }
 
@@ -94,15 +75,12 @@ public class IndexController {
     public String loginCustomer(@RequestParam("loginName") String loginName,
                              @RequestParam("password") String password,
                              HttpSession session) {
-        if (StringUtils.isEmpty(loginName) || StringUtils.isEmpty(password)) {
-            session.setAttribute("errorMsg", "用户名或密码不能为空");
-            return "login";
-        }
         try {
             Customer customer = customerService.login(loginName, password);
             if (customer != null) {
-                session.setAttribute("customerId", customer.getId());
-                //session过期时间设置为7200秒 即两小时
+                session.setAttribute("userId", customer.getId());
+
+                //keep session alive for 7200 second
                 session.setMaxInactiveInterval(60 * 60 * 2);
                 return "redirect:/index";
             }
