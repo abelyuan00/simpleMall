@@ -11,10 +11,7 @@ import com.example.simpleMall.service.implementation.AdminServiceImplementation;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -36,7 +33,7 @@ public class IndexController {
         return "login";
     }
 
-    @GetMapping({"/loginAdmin"})
+    @GetMapping({"/admin/login"})
     public String loginAdmin() {
         return "loginAdmin";
     }
@@ -47,15 +44,14 @@ public class IndexController {
     }
 
 
-    @PostMapping(value = "/loginAdmin")
+    @PostMapping(value = "/admin/login")
     public String loginAdmin(@RequestParam("loginName") String loginName,
                         @RequestParam("password") String password,
                         HttpSession session) {
         try {
             Admin admin = adminService.login(loginName, password);
             if (admin != null) {
-                session.setAttribute("adminCode", admin.getAdminCode());
-                session.setAttribute("userId", admin.getId());
+                session.setAttribute("adminId", admin.getId());
                 //keep session alive for 7200 second
                 session.setMaxInactiveInterval(60 * 60 * 2);
                 return "redirect:/index";
@@ -78,7 +74,7 @@ public class IndexController {
         try {
             Customer customer = customerService.login(loginName, password);
             if (customer != null) {
-                session.setAttribute("userId", customer.getId());
+                session.setAttribute("customerId", customer.getId());
 
                 //keep session alive for 7200 second
                 session.setMaxInactiveInterval(60 * 60 * 2);
