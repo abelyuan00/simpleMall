@@ -33,6 +33,11 @@ public class IndexController {
         return "login";
     }
 
+    @GetMapping({"/admin/profile"})
+    public String profile() {
+        return "profile";
+    }
+
     @GetMapping({"/admin/login"})
     public String loginAdmin() {
         return "loginAdmin";
@@ -58,12 +63,12 @@ public class IndexController {
             }
             else {
                 session.setAttribute("errorMsg", "password do not match");
-                return "loginAdmin";
+                return "redirect:/admin/login";
             }
         }
         catch (Exception e){
             session.setAttribute("errorMsg", "Can not find user with given login name");
-            return "loginAdmin";
+            return "redirect:/admin/login";
         }
     }
 

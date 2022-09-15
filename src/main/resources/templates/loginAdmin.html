@@ -25,7 +25,7 @@
       <div class="card">
         <div class="card-body login-card-body">
           <p class="login-box-msg"> Administrator login</p>
-          <form th:action="@{/loginAdmin}" method="post">
+          <form th:action="@{/admin/login}" method="post">
             <div th:if="${not #strings.isEmpty(session.errorMsg)}" class="form-group">
               <div class="alert alert-danger" th:text="${session.errorMsg}"></div>
             </div>

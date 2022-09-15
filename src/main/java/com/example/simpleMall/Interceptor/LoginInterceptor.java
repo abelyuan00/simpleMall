@@ -18,7 +18,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (requestURI.startsWith("/admin") && null == request.getSession().getAttribute("adminId")) {
             request.getSession().setAttribute("errorMsg", "please log in");
             response.sendRedirect(request.getContextPath() + "/admin/login");
-            System.out.println("Failed to log in");
+            System.out.println("log in requested");
             return false;
         } else {
             request.getSession().removeAttribute("errorMsg");
