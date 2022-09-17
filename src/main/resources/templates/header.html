@@ -35,9 +35,19 @@
             </a>
         </li>
         <li class="nav-item dropdown">
-            <a th:href="@{/login}" class="nav-link">
-                <i class="fa fa-arrow-right"> Log in</i>
+            <a class="nav-link" data-toggle="dropdown" href="#">
+                <i class="fa fa-users">&nbsp;&nbsp;Log in</i>
             </a>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                <div class="dropdown-divider"></div>
+                <a th:href="@{/admin/login}" class="nav-link">
+                    <i class="fa fa-arrow-right"> Admin Log in</i>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a th:href="@{/login}" class="nav-link">
+                    <i class="fa fa-arrow-right"> Customer Log in</i>
+                </a>
+            </div>
         </li>
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">

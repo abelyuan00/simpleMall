@@ -10,6 +10,6 @@ public class ErrorHandlerController implements ErrorController {
     @RequestMapping("/error")
     public String handleError() {
         //do something like logging
-        return "500";
+        return "error/500";
     }
 }

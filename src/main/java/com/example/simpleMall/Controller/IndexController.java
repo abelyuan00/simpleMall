@@ -1,22 +1,15 @@
 package com.example.simpleMall.Controller;
 
 
-import com.example.simpleMall.Dao.UserDao;
 import com.example.simpleMall.Entity.Admin;
 import com.example.simpleMall.Entity.Customer;
-import com.example.simpleMall.Entity.User;
 import com.example.simpleMall.service.AdminService;
 import com.example.simpleMall.service.CustomerService;
-import com.example.simpleMall.service.implementation.AdminServiceImplementation;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import java.util.Date;
-import java.util.Locale;
 
 @Controller
 public class IndexController {
@@ -30,17 +23,27 @@ public class IndexController {
 
     @GetMapping({"/login"})
     public String login() {
-        return "login";
+        return "customer/login";
+    }
+
+    @GetMapping({"/customer/profile"})
+    public String profileCustomer() {
+        return "customer/profileCustomer";
     }
 
     @GetMapping({"/admin/profile"})
-    public String profile() {
-        return "profile";
+    public String profileAdmin() {
+        return "customer/profileAdmin";
+    }
+
+    @GetMapping({"/admin/changePassword"})
+    public String changePassword() {
+        return "admin/changePassword";
     }
 
     @GetMapping({"/admin/login"})
     public String loginAdmin() {
-        return "loginAdmin";
+        return "admin/loginAdmin";
     }
 
     @GetMapping({"/index"})
