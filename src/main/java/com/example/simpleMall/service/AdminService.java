@@ -5,4 +5,7 @@ import com.example.simpleMall.Entity.Admin;
 public interface AdminService {
 
     Admin login(String loginName, String password);
+
+    void changeCustomerPassword(String logInName, String oldPass, String newPass);
+
 }

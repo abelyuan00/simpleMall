@@ -20,11 +20,18 @@ public class LoginInterceptor implements HandlerInterceptor {
             response.sendRedirect(request.getContextPath() + "/admin/login");
             System.out.println("log in requested");
             return false;
+        } else if (requestURI.startsWith("/customer") && null == request.getSession().getAttribute("customerId")) {
+            request.getSession().setAttribute("errorMsg", "please log in");
+            response.sendRedirect(request.getContextPath() + "/customer/login");
+            System.out.println("log in requested");
+            return false;
         } else {
             request.getSession().removeAttribute("errorMsg");
             return true;
         }
+
     }
+
 
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {

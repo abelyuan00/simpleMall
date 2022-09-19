@@ -27,7 +27,11 @@ public interface UserDao {
 
     Admin findAdmin(@Param("loginName")String loginName);
 
-    Customer findCustomer(String loginName);
+    Admin findAdminById(@Param("Id")Integer adminId);
+
+    Customer findCustomer(@Param("loginName")String loginName);
+
+    Customer findCustomerById(@Param("Id")Integer customerId);
 
 
 

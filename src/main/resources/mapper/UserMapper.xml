@@ -62,14 +62,25 @@
 
 
     <select id="findCustomer" parameterType="String" resultMap="CustomerResult">
-        select id,name,code,login_name,password from customer
+        select * from customer
         where login_name = #{loginName,jdbcType=VARCHAR}
-        order by id desc
+    </select>
+
+    <select id="findCustomerById" parameterType="String" resultMap="CustomerResult">
+        select * from customer
+        where id = #{customerId,jdbcType=INTEGER}
     </select>
 
     <select id="findAdmin" resultMap="AdminResult">
         select * from admin
         where login_name = #{loginName,jdbcType=VARCHAR}
     </select>
+
+    <select id="findAdminById" resultMap="AdminResult">
+        select * from admin
+        where id = #{adminId,jdbcType=INTEGER}
+    </select>
+
+
 
 </mapper>

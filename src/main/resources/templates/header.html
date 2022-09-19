@@ -30,6 +30,11 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown">
+            <a class="nav-link" th:href="@{/customer/changePassword}">
+                <i class="fa fa-atom">&nbsp;&nbsp;customer change password</i>
+            </a>
+        </li>
+        <li class="nav-item dropdown">
             <a class="nav-link" th:href="@{/index}">
                 <i class="fa fa-house-user">&nbsp;&nbsp;Front Page</i>
             </a>
@@ -44,32 +49,15 @@
                     <i class="fa fa-arrow-right"> Admin Log in</i>
                 </a>
                 <div class="dropdown-divider"></div>
-                <a th:href="@{/login}" class="nav-link">
+                <a th:href="@{/customer/login}" class="nav-link">
                     <i class="fa fa-arrow-right"> Customer Log in</i>
                 </a>
             </div>
         </li>
         <li class="nav-item dropdown">
-            <a class="nav-link" data-toggle="dropdown" href="#">
-                <i class="fa fa-user">&nbsp;&nbsp;Author</i>
+            <a class="nav-link" th:href="@{/logout}">
+                <i class="fa fa-atom">&nbsp;log out</i>
             </a>
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <div class="dropdown-divider"></div>
-                <a href="" class="dropdown-item">
-                    <i class="fa fa-user mr-2"></i> Name
-                    <span class="float-right text-muted text-sm">abelyuan</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="" class="dropdown-item">
-                    <i class="fa fa-user-secret mr-2"></i> Occupation
-                    <span class="float-right text-muted text-sm">developer</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="" class="dropdown-item">
-                    <i class="fa fa-address-card mr-2"></i> email
-                    <span class="float-right text-muted text-sm"> abelyuan0822@gmail.com </span>
-                </a>
-            </div>
         </li>
     </ul>
 </nav>

@@ -15,6 +15,8 @@ public class WebMvcConfigurer implements org.springframework.web.servlet.config.
         // 添加一个拦截器，拦截以/admin为前缀的URL路径（后台登录拦截）
         registry.addInterceptor(loginInterceptor)
                 .addPathPatterns("/admin/**")
-                .excludePathPatterns("/admin/login");
+                .excludePathPatterns("/admin/login")
+                .addPathPatterns("/customer/**")
+                .excludePathPatterns("/customer/login");
     }
 }
