@@ -5,6 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 
+/**
+ * @author : HaiZhou Yuan
+ * @mailto : abelyuan0822@gmail.com
+ * @created : 9/21/2022, Thursday
+ **/
 @Configuration
 public class WebMvcConfigurer implements org.springframework.web.servlet.config.annotation.WebMvcConfigurer {
 

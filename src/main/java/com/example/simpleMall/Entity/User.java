@@ -9,6 +9,11 @@ import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * @author : HaiZhou Yuan
+ * @mailto : abelyuan0822@gmail.com
+ * @created : 9/22/2022, Thursday
+ **/
 @MappedSuperclass
 @Getter
 @Setter

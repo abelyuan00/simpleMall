@@ -8,6 +8,11 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * @author : HaiZhou Yuan
+ * @mailto : abelyuan0822@gmail.com
+ * @created : 9/22/2022, Thursday
+ **/
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
 

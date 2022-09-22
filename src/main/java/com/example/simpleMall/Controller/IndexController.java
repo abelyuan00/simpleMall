@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+/**
+ * @author : HaiZhou Yuan
+ * @mailto : abelyuan0822@gmail.com
+ * @created : 8/15/2022, Thursday
+ **/
 @Controller
 public class IndexController {
 

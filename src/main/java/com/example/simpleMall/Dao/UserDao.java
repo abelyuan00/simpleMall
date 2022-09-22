@@ -9,6 +9,11 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author : HaiZhou Yuan
+ * @mailto : abelyuan0822@gmail.com
+ * @created : 9/22/2022, Thursday
+ **/
 
 @Mapper
 public interface UserDao {

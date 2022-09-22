@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+/**
+ * @author : HaiZhou Yuan
+ * @mailto : abelyuan0822@gmail.com
+ * @created : 9/21/2022, Thursday
+ **/
 @Controller
 public class customerController {
 

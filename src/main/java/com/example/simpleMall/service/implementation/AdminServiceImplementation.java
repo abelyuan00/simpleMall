@@ -14,6 +14,11 @@ import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 
+/**
+ * @author : HaiZhou Yuan
+ * @mailto : abelyuan0822@gmail.com
+ * @created : 9/22/2022, Thursday
+ **/
 @Service
 public class AdminServiceImplementation implements AdminService {
 

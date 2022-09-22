@@ -10,6 +10,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+/**
+ * @author : HaiZhou Yuan
+ * @mailto : abelyuan0822@gmail.com
+ * @created : 9/22/2022
+ **/
+
 @Controller
 public class adminController {
 
@@ -19,12 +25,19 @@ public class adminController {
 
     @GetMapping({"/admin/profile"})
     public String profileAdmin() {
-        return "customer/profileAdmin";
+        return "admin/profileAdmin";
     }
 
+    //Used in
     @GetMapping({"/admin/changePassword"})
     public String changePassword() {
         return "admin/changePassword";
+    }
+
+    //change customer information other than password
+    @GetMapping({"/admin/customerManage"})
+    public String customerManage() {
+        return "admin/customerManage";
     }
 
     @PostMapping(value = "/admin/changePassword")
