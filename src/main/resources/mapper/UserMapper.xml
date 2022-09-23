@@ -66,9 +66,9 @@
         where login_name = #{loginName,jdbcType=VARCHAR}
     </select>
 
-    <select id="findCustomerById" parameterType="String" resultMap="CustomerResult">
+    <select id="findCustomerById" resultMap="CustomerResult">
         select * from customer
-        where id = #{customerId,jdbcType=INTEGER}
+        where id = #{customerId,jdbcType=BIGINT}
     </select>
 
     <select id="findAdmin" resultMap="AdminResult">
@@ -78,7 +78,7 @@
 
     <select id="findAdminById" resultMap="AdminResult">
         select * from admin
-        where id = #{adminId,jdbcType=INTEGER}
+        where id = #{adminId,jdbcType=BIGINT}
     </select>
 
 

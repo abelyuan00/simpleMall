@@ -10,11 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-/**
- * @author : HaiZhou Yuan
- * @mailto : abelyuan0822@gmail.com
- * @created : 9/21/2022, Thursday
- **/
 @Controller
 public class customerController {
 
@@ -62,11 +57,15 @@ public class customerController {
     }
 
     @PostMapping(value = "/customer/changePassword")
-    public String changePassword(@RequestParam("loginName") String loginName,
-                                 @RequestParam("originalPassword") String originalPassword,
+    public String changePassword(@RequestParam("originalPassword") String originalPassword,
                                  @RequestParam("newPassword") String newPassword,
                                  HttpSession session) {
 
+        String loginName = customerService.loadCustomer((Long) session.getAttribute("customerId")).getLoginName();
+        Boolean result = customerService.updatePassword(loginName,originalPassword,newPassword);
+        if (!result){
+            session.setAttribute("errorMsg","Original Password did not match, please try again");
+        }
         return "customer/changePassword";
     }
 }

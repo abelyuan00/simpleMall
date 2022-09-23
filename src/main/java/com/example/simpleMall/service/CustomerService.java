@@ -11,4 +11,8 @@ import com.example.simpleMall.Entity.Customer;
 public interface CustomerService {
 
     Customer login(String loginName, String password);
+
+    Customer loadCustomer(Long customerId);
+
+    Boolean updatePassword(String loginName, String passwordOld, String passwordNew);
 }

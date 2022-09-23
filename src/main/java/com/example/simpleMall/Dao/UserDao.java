@@ -32,11 +32,11 @@ public interface UserDao {
 
     Admin findAdmin(@Param("loginName")String loginName);
 
-    Admin findAdminById(@Param("Id")Integer adminId);
+    Admin findAdminById(@Param("adminId")Long adminId);
 
     Customer findCustomer(@Param("loginName")String loginName);
 
-    Customer findCustomerById(@Param("Id")Integer customerId);
+    Customer findCustomerById(@Param("customerId")Long customerId);
 
 
 

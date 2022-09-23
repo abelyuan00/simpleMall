@@ -40,4 +40,36 @@ public class CustomerServiceImplementation implements CustomerService {
         }
         return customer;
     }
+
+    @Override
+    public Customer loadCustomer(Long id) {
+        Customer customer = null;
+        try {
+            customer = userDao.findCustomerById(id);
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        return customer;
+    }
+
+    @Override
+    public Boolean updatePassword(String loginName, String passwordOld, String passwordNew) {
+
+        Customer customer = new Customer();
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        try {
+            customer = userDao.findCustomer(loginName);
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
+
+        Boolean isPasswordMatches = encoder.matches(passwordOld,customer.getPassword());
+        if(isPasswordMatches) {
+            customer.encodePassword(passwordNew);
+            userDao.updateCustomer(customer);
+            return true;
+        }
+        else
+            return false;
+    }
 }
