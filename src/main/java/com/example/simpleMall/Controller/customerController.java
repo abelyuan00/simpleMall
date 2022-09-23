@@ -61,6 +61,10 @@ public class customerController {
                                  @RequestParam("newPassword") String newPassword,
                                  HttpSession session) {
 
+        if(null==session.getAttribute("customerId")){
+            session.setAttribute("errorMsg","Please log in before change password");
+            return "customer/changePassword";
+        }
         String loginName = customerService.loadCustomer((Long) session.getAttribute("customerId")).getLoginName();
         Boolean result = customerService.updatePassword(loginName,originalPassword,newPassword);
         if (!result){

@@ -45,10 +45,35 @@ public class AdminServiceImplementation implements AdminService {
     }
 
     @Override
-    public void changeCustomerPassword(String logInName, String oldPass, String newPass) {
+    public Boolean updatePassword(String loginName, String passwordOld, String passwordNew) {
 
-        Customer customer = userDao.findCustomer(logInName);
+        Admin admin = null;
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        try {
+            admin = userDao.findAdmin(loginName);
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
+
+        Boolean isPasswordMatches = encoder.matches(passwordOld,admin.getPassword());
+        if(isPasswordMatches) {
+            admin.encodePassword(passwordNew);
+            userDao.updateAdmin(admin);
+            return true;
+        }
+        else
+            return false;
 
     }
 
+    @Override
+    public Admin loadAdmin(Long id) {
+        Admin admin = null;
+        try {
+            admin = userDao.findAdminById(id);
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        return admin;
+    }
 }

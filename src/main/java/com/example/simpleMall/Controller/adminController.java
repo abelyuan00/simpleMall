@@ -40,15 +40,6 @@ public class adminController {
         return "admin/customerManage";
     }
 
-    @PostMapping(value = "/admin/changePassword")
-    public String changePassword(@RequestParam("loginName") String loginName,
-                                 @RequestParam("originalPassword") String originalPassword,
-                                 @RequestParam("newPassword") String newPassword,
-                                 HttpSession session) {
-
-        return "admin/changePassword";
-    }
-
     @GetMapping({"/admin/login"})
     public String loginAdmin() {
         return "admin/loginAdmin";
@@ -77,4 +68,22 @@ public class adminController {
             return "redirect:/admin/login";
         }
     }
+
+    @PostMapping(value = "/admin/changePassword")
+    public String changePassword(@RequestParam("originalPassword") String originalPassword,
+                                 @RequestParam("newPassword") String newPassword,
+                                 HttpSession session) {
+
+        if(null==session.getAttribute("adminId")){
+            session.setAttribute("errorMsg","Please log in before change password");
+            return "admin/changePassword";
+        }
+        String loginName = adminService.loadAdmin((Long) session.getAttribute("adminId")).getLoginName();
+        Boolean result = adminService.updatePassword(loginName,originalPassword,newPassword);
+        if (!result){
+            session.setAttribute("errorMsg","Original Password did not match, please try again");
+        }
+        return "admin/changePassword";
+    }
 }
+
