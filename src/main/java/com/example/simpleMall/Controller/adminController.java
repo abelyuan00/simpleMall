@@ -80,9 +80,11 @@ public class adminController {
         }
         String loginName = adminService.loadAdmin((Long) session.getAttribute("adminId")).getLoginName();
         Boolean result = adminService.updatePassword(loginName,originalPassword,newPassword);
-        if (!result){
-            session.setAttribute("errorMsg","Original Password did not match, please try again");
+        if (result){
+            session.setAttribute("successMsg","Password updated");
         }
+        else
+            session.setAttribute("errorMsg","Original Password did not match, please try again");
         return "admin/changePassword";
     }
 }
