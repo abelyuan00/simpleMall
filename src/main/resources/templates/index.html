@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<header th:replace="header::header-fragment">
+<head th:fragment="header-fragment">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" th:href="@{/dist/img/AdminLTELogo.png}"/>
+  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="../../plugins/jqgrid/ui.jqgrid-bootstrap4.css" />
 
-</header>
+</head>
 <body class="hold-transition sidebar-mini">
 
 <!--div defines a section in a document-->
 <div class="wrapper">
-  <!-- 引入页面头header-fragment -->
   <div th:replace="header::header-nav"></div>
-  <!-- 引入工具栏sidebar-fragment -->
   <div th:replace="sidebar::sidebar-fragment(${path})"></div>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -20,37 +23,6 @@
     </div>
     <!-- Main content -->
     <div class="content">
-      <div class="alert">
-        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-        This is an alert box.
-      </div>
-
-      <style>
-        .alert {
-          padding: 20px;
-          background-color: #f44336; /* Red */
-          color: white;
-          margin-bottom: 15px;
-        }
-
-        /* The close button */
-        .closebtn {
-          margin-left: 15px;
-          color: white;
-          font-weight: bold;
-          float: right;
-          font-size: 22px;
-          line-height: 20px;
-          cursor: pointer;
-          transition: 0.3s;
-        }
-
-        /* When moving the mouse over the close button */
-        .closebtn:hover {
-          color: black;
-        }
-      </style>
-
       <div class="card card-primary card-outline">
 
         <div class="card-header">
@@ -95,14 +67,14 @@
       {label: 'ID', name: 'id', index: 'id', width: 50, hidden: false, key: true},
       {label: 'Code', name: 'code', index: 'code', sortable: false, width: 80},
       {label: 'Update time', name: 'updateTime', index: 'updateTime', sortable: false, width: 80},
-      {label: 'Status', name: 'status', index: 'status',sortable: false, width: 80},
+      {label: 'Status', name: 'status', index: 'status',sortable: false, width: 40},
       {label: 'Name', name: 'productName', index: 'productName', sortable: false, width: 80},
       {label: 'Description', name: 'description', index: 'description', sortable: false, width: 80}
     ],
     height: 500,
     rowNum: 10,
     rowList: [10, 30, 50],
-    styleUI: 'Bootstrap',
+    styleUI: 'Bootstrap4',
     iconSet: "fontAwesome",
     loadtext: 'loading',
     rownumbers: true,
@@ -120,11 +92,9 @@
       page: "page",
       rows: "limit",
       order: "order"
-    },
-    gridComplete: function () {
-      $("#jqGrid").closest(".ui-jqgrid-bdiv").css({"overflow-x": "hidden"});
     }
   });
+
 </script>
 </body>
 </html>
