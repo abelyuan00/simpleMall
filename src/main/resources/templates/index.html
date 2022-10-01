@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<header th:replace="header::header-fragment"></header>
+<header th:replace="header::header-fragment">
+
+</header>
 <body class="hold-transition sidebar-mini">
 
 <!--div defines a section in a document-->
@@ -59,8 +61,12 @@
         </div> <!-- /.card-body -->
         <div class="card-body">
           <div style="padding: 10px 0 20px 10px;">
-            content
+            <table id="jqGrid" class="table table-bordered"></table>
+            <div id="jqGridPager">
+            </div>
           </div>
+
+
         </div>
 
       </div><!-- /.container-fluid -->
@@ -79,5 +85,46 @@
 <script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
 <!-- AdminLTE App -->
 <script th:src="@{/dist/js/adminlte.min.js}"></script>
+<script th:src="@{/plugins/jqgrid/jquery.jqGrid.min.js}"></script>
+<script th:src="@{/plugins/jqgrid/grid.locale-en.js}"></script>
+<script>
+  $("#jqGrid").jqGrid({
+    url: 'product/list',
+    datatype: "json",
+    colModel: [
+      {label: 'ID', name: 'id', index: 'id', width: 50, hidden: false, key: true},
+      {label: 'Code', name: 'code', index: 'code', sortable: false, width: 80},
+      {label: 'Update time', name: 'updateTime', index: 'updateTime', sortable: false, width: 80},
+      {label: 'Status', name: 'status', index: 'status',sortable: false, width: 80},
+      {label: 'Name', name: 'productName', index: 'productName', sortable: false, width: 80},
+      {label: 'Description', name: 'description', index: 'description', sortable: false, width: 80}
+    ],
+    height: 500,
+    rowNum: 10,
+    rowList: [10, 30, 50],
+    styleUI: 'Bootstrap',
+    iconSet: "fontAwesome",
+    loadtext: 'loading',
+    rownumbers: true,
+    rownumWidth: 35,
+    autowidth: true,
+    multiselect: true,
+    pager: "#jqGridPager",
+    jsonReader: {
+      root: "data.list",
+      page: "data.currPage",
+      total: "data.totalPage",
+      records: "data.totalCount"
+    },
+    prmNames: {
+      page: "page",
+      rows: "limit",
+      order: "order"
+    },
+    gridComplete: function () {
+      $("#jqGrid").closest(".ui-jqgrid-bdiv").css({"overflow-x": "hidden"});
+    }
+  });
+</script>
 </body>
 </html>

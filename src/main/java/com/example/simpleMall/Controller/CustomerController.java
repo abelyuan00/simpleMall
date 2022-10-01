@@ -11,7 +11,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 @Controller
-public class customerController {
+public class CustomerController {
 
     @Resource
     CustomerService customerService;
