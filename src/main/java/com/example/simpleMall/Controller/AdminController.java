@@ -2,6 +2,8 @@ package com.example.simpleMall.Controller;
 
 import com.example.simpleMall.Entity.Admin;
 import com.example.simpleMall.service.AdminService;
+import org.apache.ibatis.jdbc.Null;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,21 +52,33 @@ public class AdminController {
     public String loginAdmin(@RequestParam("loginName") String loginName,
                              @RequestParam("password") String password,
                              HttpSession session) {
+        Logger log = org.slf4j.LoggerFactory.getLogger(this.getClass());
         try {
             Admin admin = adminService.login(loginName, password);
             if (admin != null) {
                 session.setAttribute("adminId", admin.getId());
+                session.removeAttribute("errorMsg");
+                if(null!=session.getAttribute("customerId")){
+                    session.removeAttribute("customerId");
+                }
                 //keep session alive for 7200 second
                 session.setMaxInactiveInterval(60 * 60 * 2);
                 return "redirect:/index";
             }
             else {
+
                 session.setAttribute("errorMsg", "password do not match");
                 return "redirect:/admin/login";
             }
         }
-        catch (Exception e){
-            session.setAttribute("errorMsg", "Can not find user with given login name");
+        catch (RuntimeException e){
+            if(e.getCause() instanceof NullPointerException){
+                session.setAttribute("errorMsg", "Can not find user with given name");
+            }
+            else
+                session.setAttribute("errorMsg", "Error occurred, Please check error message");
+
+            log.error(e.getMessage());
             return "redirect:/admin/login";
         }
     }

@@ -2,6 +2,7 @@ package com.example.simpleMall.Controller;
 
 import com.example.simpleMall.Entity.Customer;
 import com.example.simpleMall.service.CustomerService;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,11 +32,16 @@ public class CustomerController {
     public String loginCustomer(@RequestParam("loginName") String loginName,
                                 @RequestParam("password") String password,
                                 HttpSession session) {
+        Logger log = org.slf4j.LoggerFactory.getLogger(this.getClass());
         try {
+            if(null!=session.getAttribute("adminId")){
+                session.setAttribute("errorMsg","Please log out admin account first");
+                return "customer/loginCustomer";
+            }
             Customer customer = customerService.login(loginName, password);
             if (customer != null) {
                 session.setAttribute("customerId", customer.getId());
-
+                session.removeAttribute("errorMsg");
                 //keep session alive for 7200 second
                 session.setMaxInactiveInterval(60 * 60 * 2);
                 return "redirect:/index";
@@ -46,7 +52,12 @@ public class CustomerController {
             }
         }
         catch (Exception e){
-            session.setAttribute("errorMsg", "Can not find user with given login name");
+            if(e.getCause() instanceof NullPointerException){
+                session.setAttribute("errorMsg", "Can not find user with given name");
+            }
+            else
+                session.setAttribute("errorMsg", "Error occurred, Please contact admin");
+            log.error(e.getMessage());
             return "customer/loginCustomer";
         }
     }
