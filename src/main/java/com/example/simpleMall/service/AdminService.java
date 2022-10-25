@@ -1,6 +1,8 @@
 package com.example.simpleMall.service;
 
 import com.example.simpleMall.Entity.Admin;
+import com.example.simpleMall.Util.PageQueryUtil;
+import com.example.simpleMall.Util.PageResult;
 
 /**
  * @author : HaiZhou Yuan
@@ -15,4 +17,5 @@ public interface AdminService {
 
     Admin loadAdmin(Long adminId);
 
+    PageResult getPageListResult(PageQueryUtil pageUtil);
 }

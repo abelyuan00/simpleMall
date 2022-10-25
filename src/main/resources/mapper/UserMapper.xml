@@ -9,6 +9,18 @@
         <result property="password" column="password"/>
     </resultMap>
 
+    <resultMap type="com.example.simpleMall.Entity.Customer" id="CustomerListResult">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="code" column="code"/>
+        <result property="loginName" column="login_name"/>
+        <result property="status" jdbcType="VARCHAR" column="status"/>
+        <result property="membershipLevel" jdbcType="VARCHAR" column="membership_level"/>
+        <result property="createdTime" column="created_time"/>
+        <result property="updateTime" column="update_time"/>
+
+    </resultMap>
+
     <resultMap id="AdminResult" type="com.example.simpleMall.Entity.Admin" >
         <id property="id" column="id"/>
         <result property="code" column="code"/>
@@ -81,6 +93,17 @@
         where id = #{adminId,jdbcType=BIGINT}
     </select>
 
+    <select id="getCustomerList" parameterType="Map" resultMap="CustomerListResult">
+        select * from customer
+        order by id desc
+        <if test="start!=null and limit!=null">
+            limit #{start},#{limit}
+        </if>
+    </select>
 
+
+    <select id="getTotalCustomer" parameterType="Map" resultType="int">
+        select count(*) from customer
+    </select>
 
 </mapper>

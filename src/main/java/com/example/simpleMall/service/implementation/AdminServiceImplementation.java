@@ -4,6 +4,8 @@ import com.example.simpleMall.Dao.UserDao;
 import com.example.simpleMall.Dao.UserLogin;
 import com.example.simpleMall.Entity.Admin;
 import com.example.simpleMall.Entity.Customer;
+import com.example.simpleMall.Util.PageQueryUtil;
+import com.example.simpleMall.Util.PageResult;
 import com.example.simpleMall.service.AdminService;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -13,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author : HaiZhou Yuan
@@ -75,5 +78,16 @@ public class AdminServiceImplementation implements AdminService {
             throw new RuntimeException(e);
         }
         return admin;
+    }
+
+    @Override
+    public PageResult getPageListResult(PageQueryUtil pageUtil) {
+        // data list for current page
+        List<Customer> products = userDao.getCustomerList(pageUtil);
+        // all data
+        Integer total = userDao.getTotalCustomer(pageUtil);
+        // page split
+        PageResult pageResult = new PageResult(products, total, pageUtil.getLimit(), pageUtil.getPage());
+        return pageResult;
     }
 }
