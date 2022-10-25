@@ -9,9 +9,9 @@ import java.util.Map;
  * @created : 9/28/2022, Wednesday
  **/
 public class PageQueryUtil extends LinkedHashMap<String, Object> {
-    //当前页码
+    //page number
     private int page;
-    //每页条数
+    //column limit
     private int limit;
 
     public PageQueryUtil(Map<String, Object> params) {

@@ -1,15 +1,18 @@
 package com.example.simpleMall.Controller;
 
 import com.example.simpleMall.Entity.Customer;
+import com.example.simpleMall.Util.PageQueryUtil;
+import com.example.simpleMall.Util.PageResult;
+import com.example.simpleMall.Util.Result;
 import com.example.simpleMall.service.CustomerService;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 @Controller
 public class CustomerController {
@@ -85,4 +88,5 @@ public class CustomerController {
             session.setAttribute("errorMsg","Original Password did not match, please try again");
         return "customer/changePassword";
     }
+
 }

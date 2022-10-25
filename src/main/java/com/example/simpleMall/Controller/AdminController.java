@@ -1,16 +1,19 @@
 package com.example.simpleMall.Controller;
 
 import com.example.simpleMall.Entity.Admin;
+import com.example.simpleMall.Util.PageQueryUtil;
+import com.example.simpleMall.Util.PageResult;
+import com.example.simpleMall.Util.Result;
 import com.example.simpleMall.service.AdminService;
 import org.apache.ibatis.jdbc.Null;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 /**
  * @author : HaiZhou Yuan
@@ -100,6 +103,29 @@ public class AdminController {
         else
             session.setAttribute("errorMsg","Original Password did not match, please try again");
         return "admin/changePassword";
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/admin/customerList", method = RequestMethod.GET)
+    public Result list(@RequestParam Map<String, Object> params) {
+        Result result = new Result();
+        if (StringUtils.isEmpty(params.get("page")) || StringUtils.isEmpty(params.get("limit"))) {
+            // 返回错误码
+            result.setResultCode(500);
+            // 错误信息
+            result.setMessage("ERROR");
+            return result;
+        }
+        // set in parameters
+        PageQueryUtil queryParamList = new PageQueryUtil(params);
+        PageResult productPage = adminService.getPageListResult(queryParamList);
+        // success code
+        result.setResultCode(200);
+        result.setMessage("Data retrieve success ");
+        // page split
+        result.setData(productPage);
+        return result;
     }
 }
 
