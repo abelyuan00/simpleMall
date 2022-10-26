@@ -21,4 +21,11 @@ public interface CategoryService {
      */
     PageResult getCategoryPage(PageQueryUtil pageUtil);
 
+    String saveCategory(Category category);
+
+    String updateCategory(Category category);
+
+    Category getCategoryById(Long id);
+
+    Boolean deleteCategoryById(Long id);
 }

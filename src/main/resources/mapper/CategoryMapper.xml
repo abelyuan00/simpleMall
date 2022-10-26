@@ -31,6 +31,10 @@
         delete from category where name=#{name}
     </delete>
 
+    <delete id="deleteCategoryById" parameterType="long">
+        delete from category where id=#{id}
+    </delete>
+
     <select id="findCategoryByName" resultMap="CategoryResult">
         select * from category
         where name = #{name,jdbcType=VARCHAR}
@@ -63,7 +67,7 @@
         </if>
     </select>
 
-    <select id="getTotalGoodsCategories" parameterType="Map" resultType="INTEGER">
+    <select id="getTotalCategories" parameterType="Map" resultType="INTEGER">
         select count(*) from category
         <where>
             <if test="categoryLevel!=null and categoryLevel!=''">
@@ -74,5 +78,12 @@
             </if>
             and is_deleted = 0
         </where>
+    </select>
+
+    <select id="selectByLevelAndName" resultMap="CategoryResult">
+        select *
+        from category
+        where name = #{name,jdbcType=VARCHAR} and category_level = #{categoryLevel,jdbcType=TINYINT}
+        and is_deleted = 0 limit 1
     </select>
 </mapper>

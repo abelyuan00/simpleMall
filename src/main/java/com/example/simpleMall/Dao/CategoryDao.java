@@ -16,11 +16,13 @@ import java.util.List;
 @Mapper
 public interface CategoryDao {
 
-    void insertCategory(Category category);
+    int insertCategory(Category category);
 
-    void updateCategory(Category category);
+    int updateCategory(Category category);
 
-    void deleteCategory(Category category);
+    int deleteCategory(Category category);
+
+    int deleteCategoryById(Long id);
 
     Category findCategoryByName(String name);
 
@@ -30,7 +32,10 @@ public interface CategoryDao {
 
     List<Category> findCategoryList(PageQueryUtil pageUtil);
 
-    Integer getTotalGoodsCategories(PageQueryUtil pageUtil);
+    Integer getTotalCategories(PageQueryUtil pageUtil);
+
+    Category selectByLevelAndName(Integer categoryLevel, String categoryName);
+
 
 
 

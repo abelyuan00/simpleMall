@@ -56,7 +56,7 @@ public class Category {
     private Long editorId;
 
     @Column
-    private Date editTime;
+    private Date updateTime;
 
 
 }
