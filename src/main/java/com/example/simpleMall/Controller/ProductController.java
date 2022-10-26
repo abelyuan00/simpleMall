@@ -30,20 +30,17 @@ public class ProductController {
     public Result list(@RequestParam Map<String, Object> params) {
         Result result = new Result();
         if (StringUtils.isEmpty(params.get("page")) || StringUtils.isEmpty(params.get("limit"))) {
-            // 返回错误码
+            // error code
             result.setResultCode(500);
-            // 错误信息
             result.setMessage("ERROR");
             return result;
         }
-        // 封装查询参数
         PageQueryUtil queryParamList = new PageQueryUtil(params);
-        // 查询并封装分页结果集
+        // search data and split page
         PageResult productPage = productService.getProductPage(queryParamList);
-        // 返回成功码
         result.setResultCode(200);
         result.setMessage("Data retrieve success ");
-        // 返回分页数据
+        // page data
         result.setData(productPage);
 
 

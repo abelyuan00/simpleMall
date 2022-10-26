@@ -22,6 +22,7 @@ import java.util.Map;
  **/
 
 @Controller
+
 public class AdminController {
 
 
@@ -111,9 +112,7 @@ public class AdminController {
     public Result list(@RequestParam Map<String, Object> params) {
         Result result = new Result();
         if (StringUtils.isEmpty(params.get("page")) || StringUtils.isEmpty(params.get("limit"))) {
-            // 返回错误码
             result.setResultCode(500);
-            // 错误信息
             result.setMessage("ERROR");
             return result;
         }
