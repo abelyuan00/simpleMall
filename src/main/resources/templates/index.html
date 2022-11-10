@@ -5,6 +5,7 @@
   <link rel="shortcut icon" th:href="@{/dist/img/AdminLTELogo.png}"/>
   <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
   <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/v4-shims.min.css">
   <link rel="stylesheet" href="../../plugins/jqgrid/ui.jqgrid-bootstrap4.css" />
 
 </head>
@@ -59,10 +60,11 @@
 <script th:src="@{/dist/js/adminlte.min.js}"></script>
 <script th:src="@{/plugins/jqgrid/jquery.jqGrid.min.js}"></script>
 <script th:src="@{/plugins/jqgrid/grid.locale-en.js}"></script>
-<script>
+<script type="text/javascript">
   $("#jqGrid").jqGrid({
     url: 'product/list',
     datatype: "json",
+    mtype:'GET',
     colModel: [
       {label: 'ID', name: 'id', index: 'id', width: 50, hidden: false, key: true},
       {label: 'Code', name: 'code', index: 'code', sortable: false, width: 80},
