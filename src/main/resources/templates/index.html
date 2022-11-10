@@ -33,11 +33,18 @@
           </nav>
         </div> <!-- /.card-body -->
         <div class="card-body">
-          <div style="padding: 10px 0 20px 10px;">
-            <table id="jqGrid" class="table table-bordered"></table>
-            <div id="jqGridPager">
-            </div>
+          <div class="grid-btn">
+            <nav>
+              <button onclick="window.location.href='admin/customerManage'">Customer Manage</button>
+            </nav>
+            <nav>
+              <a th:href="@{/admin/product}" class="brand-link"> product</a>
+            </nav>
           </div>
+        </div>
+
+      </div><!-- /.container-fluid -->
+    </div>
 
 
         </div>
@@ -60,43 +67,5 @@
 <script th:src="@{/dist/js/adminlte.min.js}"></script>
 <script th:src="@{/plugins/jqgrid/jquery.jqGrid.min.js}"></script>
 <script th:src="@{/plugins/jqgrid/grid.locale-en.js}"></script>
-<script type="text/javascript">
-  $("#jqGrid").jqGrid({
-    url: 'product/list',
-    datatype: "json",
-    mtype:'GET',
-    colModel: [
-      {label: 'ID', name: 'id', index: 'id', width: 50, hidden: false, key: true},
-      {label: 'Code', name: 'code', index: 'code', sortable: false, width: 80},
-      {label: 'Update time', name: 'updateTime', index: 'updateTime', sortable: false, width: 80},
-      {label: 'Status', name: 'status', index: 'status',sortable: false, width: 40},
-      {label: 'Name', name: 'productName', index: 'productName', sortable: false, width: 80},
-      {label: 'Description', name: 'description', index: 'description', sortable: false, width: 80}
-    ],
-    height: 500,
-    rowNum: 10,
-    rowList: [10, 30, 50],
-    styleUI: 'Bootstrap4',
-    iconSet: "fontAwesome",
-    loadtext: 'loading',
-    rownumbers: true,
-    rownumWidth: 35,
-    autowidth: true,
-    multiselect: true,
-    pager: "#jqGridPager",
-    jsonReader: {
-      root: "data.list",
-      page: "data.currPage",
-      total: "data.totalPage",
-      records: "data.totalCount"
-    },
-    prmNames: {
-      page: "page",
-      rows: "limit",
-      order: "order"
-    }
-  });
-
-</script>
 </body>
 </html>
