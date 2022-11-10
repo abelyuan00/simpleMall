@@ -10,7 +10,7 @@
         <result property="creatorId" column="creator_id"/>
         <result property="creatTime" column="creat_time"/>
         <result property="editorId" column="editor_id"/>
-        <result property="editTime" column="edit_time"/>
+        <result property="updateTime" column="update_time"/>
     </resultMap>
 
 
@@ -23,7 +23,7 @@
         update category
         set
             category_level=#{categoryLevel},superior_id=#{superiorId},name=#{name},
-            is_deleted=#{isDeleted},edit_time=CURRENT_TIME,editor_id=#{editorId}
+            is_deleted=#{isDeleted},update_time=CURRENT_TIME,editor_id=#{editorId}
         where id=#{id}
     </update>
 

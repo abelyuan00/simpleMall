@@ -1,10 +1,153 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="header-fragment">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" th:href="@{/dist/img/AdminLTELogo.png}"/>
+    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/v4-shims.min.css">
+    <link rel="stylesheet" href="../../plugins/jqgrid/ui.jqgrid-bootstrap4.css" />
 
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <div th:replace="header::header-nav"></div>
+    <div th:replace="sidebar::sidebar-fragment(${path})"></div>
+    <div class="content-wrapper">
+        <div class="content-header">
+            <div class="container-fluid">
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="card card-primary card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title">Category management</h3>
+                    </div> <!-- /.card-body -->
+                    <div class="card-body">
+                        <div class="grid-btn">
+                            <button class="btn btn-info" onclick="categoryAdd()"><i
+                                    class="fa fa-plus"></i>&nbsp;ADD
+                            </button>
+                            <button class="btn btn-info" onclick="categoryEdit()"><i
+                                    class="fa fa-pencil-square-o"></i>&nbsp;EDIT
+                            </button>
+                            <button class="btn btn-danger" onclick="deleteCagegory()"><i
+                                    class="fa fa-trash-o"></i>&nbsp;DELETE
+                            </button>
+                            <button class="btn btn-info" onclick="categoryManage()"><i
+                                    class="fa fa-list"></i>&nbsp;SUBCATEGORY
+                            </button>
+                            <button class="btn btn-info" onclick="categoryBack()"><i
+                                    class="fa fa-backward"></i>&nbsp;PREVIOUS
+                            </button>
+                        </div>
+                        <br>
+                        <table id="jqGrid" class="table table-bordered"></table>
+                        <div id="jqGridPager">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="modal fade" id="categoryModal" tabindex="-1" role="dialog" aria-labelledby="categoryModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h6 class="modal-title" id="categoryModalLabel">Modal</h6>
+                        </div>
+                        <div class="modal-body">
+                            <form id="categoryForm">
+                                <div class="form-group">
+                                    <div class="alert alert-danger" id="edit-error-msg" style="display: none;">
+                                        Error msg
+                                    </div>
+                                </div>
+                                <input type="hidden" class="form-control" id="categoryId" name="categoryId">
+                                <input type="hidden" id="categoryLevel" th:value="${categoryLevel}">
+                                <input type="hidden" id="superiorId" th:value="${superiorId}">
+                                <input type="hidden" id="previousId" th:value="${previousId}">
+                                <div class="form-group">
+                                    <label for="categoryName" class="control-label">Category name:</label>
+                                    <input type="text" class="form-control" id="categoryName" name="categoryName"
+                                           placeholder="Category name" required="true">
+                                </div>
+                                <div class="form-group">
+                                    <label for="categoryName" class="control-label">Category tier:</label>
+                                    <input type="number" class="form-control" id="categoryRank" name="categoryRank"
+                                           placeholder="Category tier" required="true">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" id="saveButton">Confirm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="footer::footer-fragment"></div>
+<!-- jQuery -->
+<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script th:src="@{/plugins/jquery-ui/jquery-ui.min.js}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/dist/js/adminlte.min.js}"></script>
+<script th:src="@{/plugins/jqgrid/jquery.jqGrid.min.js}"></script>
+<script th:src="@{/plugins/jqgrid/grid.locale-en.js}"></script>
+
+<!-- sweetalert -->
+<script th:src="@{/plugins/sweetalert/sweetalert.min.js}"></script>
+
+<script th:src="@{/admin/categories.js}"></script>
+<script>
+    var categoryLevel = $("#categoryLevel").val();
+    var superiorId = $("#superiorId").val();
+    $("#jqGrid").jqGrid({
+        url: '/admin/categories/list?categoryLevel=' + categoryLevel + '&superiorId=' + superiorId,
+        mtype:'GET',
+        datatype: "json",
+        colModel: [
+            {label: 'id', name: 'id', index: 'id', width: 50, key: true, hidden: true},
+            {label: 'Name', name: 'name', index: 'name', width: 240},
+            {label: 'Level', name: 'categoryLevel', index: 'categoryLevel', width: 120},
+            {label: 'Created', name: 'createTime', index: 'createTime', width: 120},
+            {label: 'Updated', name: 'updateTime', index: 'updateTime', width: 120},
+            {label: 'Deleted', name: 'isDeleted', index: 'isDeleted', width: 60}
+        ],
+        height: 500,
+        rowNum: 10,
+        rowList: [10, 30, 50],
+        styleUI: 'Bootstrap4',
+        iconSet: "fontAwesome",
+        loadtext: 'loading',
+        rownumbers: true,
+        rownumWidth: 35,
+        autowidth: true,
+
+        multiselect: true,
+        pager: "#jqGridPager",
+        jsonReader: {
+            root: "data.list",
+            page: "data.currPage",
+            total: "data.totalPage",
+            records: "data.totalCount"
+        },
+        prmNames: {
+            page: "page",
+            rows: "limit",
+            order: "order"
+        }
+    });
+</script>
 </body>
 </html>

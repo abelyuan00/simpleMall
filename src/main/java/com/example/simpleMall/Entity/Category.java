@@ -34,7 +34,8 @@ public class Category {
      * id of upper class(shoe - sneaker - Nike)
      */
     @Column
-    private Long superiorId;
+    @NotNull
+    private Long superiorId = 0L;
 
     @Column(unique = true)
     @NotNull

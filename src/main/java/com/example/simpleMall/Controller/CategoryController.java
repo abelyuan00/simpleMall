@@ -29,23 +29,22 @@ public class CategoryController {
 
 
 
-
     @GetMapping("/categories")
-    public String categoriesPage(HttpServletRequest request, @RequestParam("categoryLevel") Byte categoryLevel, @RequestParam("superiorId") Long superiorId, @RequestParam("backParentId") Long backParentId) {
-        if (categoryLevel == null || categoryLevel < 1 || categoryLevel > 3) {
-            return "error/500";
-        }
+    public String categoriesPage(HttpServletRequest request, @RequestParam("categoryLevel") Byte categoryLevel, @RequestParam("superiorId") Long superiorId, @RequestParam("previousId") Long previousId) {
+//        if (categoryLevel == null || categoryLevel < 1 || categoryLevel > 3) {
+//            return "error/500";
+//        }
         request.setAttribute("path", "categories");
         request.setAttribute("superiorId", superiorId);
-        request.setAttribute("backParentId", backParentId);
+        request.setAttribute("previousId", previousId);
         request.setAttribute("categoryLevel", categoryLevel);
         return "admin/categories";
     }
     
     @RequestMapping(value = "/categories/list", method = RequestMethod.GET)
     @ResponseBody
-    public Result list(@RequestParam Map<String, Object> params) {
-        if (StringUtils.isEmpty(params.get("page")) || StringUtils.isEmpty(params.get("limit")) || StringUtils.isEmpty(params.get("categoryLevel")) || StringUtils.isEmpty(params.get("parentId"))) {
+    public Result list(@RequestParam Map<String, Object> params,HttpServletRequest request) {
+        if (StringUtils.isEmpty(params.get("page")) || StringUtils.isEmpty(params.get("limit")) || StringUtils.isEmpty(params.get("categoryLevel")) || StringUtils.isEmpty(params.get("superiorId"))) {
             Result fail = new Result();
             fail.setMessage("Wrong param");
             fail.setResultCode(500);
@@ -56,7 +55,7 @@ public class CategoryController {
         return ResultGen.genSuccessResult(categoryService.getCategoryPage(pageUtil));
     }
 
-    /**
+       /**
      * 添加
      */
     @RequestMapping(value = "/categories/save", method = RequestMethod.POST)

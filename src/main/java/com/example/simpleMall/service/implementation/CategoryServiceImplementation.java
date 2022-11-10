@@ -6,15 +6,18 @@ import com.example.simpleMall.Util.PageQueryUtil;
 import com.example.simpleMall.Util.PageResult;
 import com.example.simpleMall.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+
 
 /**
  * @author : HaiZhou Yuan
  * @mailto : abelyuan0822@gmail.com
  * @created : 10/16/2022, Sunday
  **/
+@Service
 public class CategoryServiceImplementation implements CategoryService {
     
     @Autowired
