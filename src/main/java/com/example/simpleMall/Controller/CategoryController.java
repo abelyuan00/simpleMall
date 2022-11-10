@@ -5,7 +5,6 @@ import com.example.simpleMall.Util.PageQueryUtil;
 import com.example.simpleMall.Util.Result;
 import com.example.simpleMall.Util.ResultGen;
 import com.example.simpleMall.service.CategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -30,15 +29,14 @@ public class CategoryController {
 
 
     @GetMapping("/categories")
-    public String categoriesPage(HttpServletRequest request, @RequestParam("categoryLevel") Byte categoryLevel, @RequestParam("superiorId") Long superiorId, @RequestParam("previousId") Long previousId) {
-//        if (categoryLevel == null || categoryLevel < 1 || categoryLevel > 3) {
-//            return "error/500";
-//        }
+    public String categoriesPage(HttpServletRequest request, @RequestParam("categoryLevel") Byte categoryLevel, @RequestParam("superiorId") Long superiorId) {
+        if (categoryLevel == null || categoryLevel < 1 || categoryLevel > 3) {
+            return "error/500";
+        }
         request.setAttribute("path", "categories");
-        request.setAttribute("superiorId", superiorId);
-        request.setAttribute("previousId", previousId);
-        request.setAttribute("categoryLevel", categoryLevel);
-        return "admin/categories";
+//        request.setAttribute("superiorId", superiorId);
+//        request.setAttribute("categoryLevel", categoryLevel);
+        return "categories/categories";
     }
     
     @RequestMapping(value = "/categories/list", method = RequestMethod.GET)

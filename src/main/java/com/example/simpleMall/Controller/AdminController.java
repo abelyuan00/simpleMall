@@ -7,6 +7,8 @@ import com.example.simpleMall.Util.Result;
 import com.example.simpleMall.service.AdminService;
 import org.apache.ibatis.jdbc.Null;
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +30,11 @@ public class AdminController {
 
     @Resource
     AdminService adminService;
+
+    @Autowired
+    Environment environment;
+
+
 
     @GetMapping({"/admin/profile"})
     public String profileAdmin() {
@@ -62,12 +69,17 @@ public class AdminController {
             if (admin != null) {
                 session.setAttribute("adminId", admin.getId());
                 session.removeAttribute("errorMsg");
+                String redirect = (String) session.getAttribute("redirectTo");
+                String port = environment.getProperty("local.server.port");
+                String [] redirects = redirect.split(port,2);
+                redirect = redirects[1];
+
                 if(null!=session.getAttribute("customerId")){
                     session.removeAttribute("customerId");
                 }
                 //keep session alive for 7200 second
                 session.setMaxInactiveInterval(60 * 60 * 2);
-                return "redirect:/index";
+                return "redirect:"+redirect;
             }
             else {
 
