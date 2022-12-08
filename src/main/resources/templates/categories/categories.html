@@ -16,6 +16,9 @@
     <div class="content-wrapper">
         <div class="content-header">
             <div class="container-fluid">
+<!--                <div th:if="${not #strings.isEmpty(session.adminId)}" class="form-group">-->
+<!--                    <div class="alert alert-danger" th:text="${session.adminId}"></div>-->
+<!--                </div>-->
             </div><!-- /.container-fluid -->
         </div>
         <!-- Main content -->
@@ -33,14 +36,8 @@
                             <button class="btn btn-info" onclick="categoryEdit()">
                                 <i class="fa fa-pencil-square-o"></i>&nbsp;EDIT
                             </button>
-                            <button class="btn btn-danger" onclick="deleteCagegory()">
+                            <button class="btn btn-danger" onclick="deleteCategory()">
                                 <i class="fa fa-trash-o"></i>&nbsp;DELETE
-                            </button>
-                            <button class="btn btn-info" onclick="categoryManage()">
-                                <i class="fa fa-list"></i>&nbsp;SUBCATEGORY
-                            </button>
-                            <button class="btn btn-info" onclick="categoryBack()">
-                                <i class="fa fa-backward"></i>&nbsp;PREVIOUS
                             </button>
                         </div>
                         <br>
@@ -68,8 +65,6 @@
                                     </div>
                                 </div>
                                 <input type="hidden" class="form-control" id="categoryId" name="categoryId">
-                                <input type="hidden" id="categoryLevel" th:value="${categoryLevel}">
-                                <input type="hidden" id="superiorId" th:value="${superiorId}">
                                 <div class="form-group">
                                     <label for="categoryName" class="control-label">Category name:</label>
                                     <input type="text" class="form-control" id="categoryName" name="categoryName"
@@ -80,11 +75,16 @@
                                     <input type="number" class="form-control" id="categoryRank" name="categoryRank"
                                            placeholder="Category tier" required="true">
                                 </div>
+                                <div class="form-group">
+                                    <label for="categoryName" class="control-label">Superior category:</label>
+                                    <input type="number" class="form-control" id="superiorId" name="categoryRank"
+                                           placeholder="Superior category" required="true" value=0>
+                                </div>
                             </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-primary" id="saveButton">Confirm</button>
+                            <button type="button" class="btn btn-primary" id="saveButton" >Confirm</button>
                         </div>
                     </div>
                 </div>
@@ -103,216 +103,9 @@
 <script th:src="@{/dist/js/adminlte.min.js}"></script>
 <script th:src="@{/plugins/jqgrid/jquery.jqGrid.min.js}"></script>
 <script th:src="@{/plugins/jqgrid/grid.locale-en.js}"></script>
-
 <!-- sweetalert -->
-<script th:src="@{/plugins/sweetalert/sweetalert.min.js}"></script>
-
-<script th:src="@{/categories/categories.js}"></script>
-<script>
-    var categoryLevel = $("#categoryLevel").val();
-    var superiorId = $("#superiorId").val();
-    $("#jqGrid").jqGrid({
-        url: '/admin/categories/list?categoryLevel=' + 1 + '&superiorId=' + 0,
-        mtype:'GET',
-        datatype: "json",
-        colModel: [
-            {label: 'id', name: 'id', index: 'id', width: 50, key: true, hidden: true},
-            {label: 'Name', name: 'name', index: 'name', width: 240},
-            {label: 'Level', name: 'categoryLevel', index: 'categoryLevel', width: 120},
-            {label: 'Created', name: 'createTime', index: 'createTime', width: 120},
-            {label: 'Updated', name: 'updateTime', index: 'updateTime', width: 120},
-            {label: 'Deleted', name: 'isDeleted', index: 'isDeleted', width: 60}
-        ],
-        height: 500,
-        rowNum: 10,
-        rowList: [10, 30, 50],
-        styleUI: 'Bootstrap4',
-        iconSet: "fontAwesome",
-        loadtext: 'loading',
-        rownumbers: true,
-        rownumWidth: 35,
-        autowidth: true,
-
-        multiselect: true,
-        pager: "#jqGridPager",
-        jsonReader: {
-            root: "data.list",
-            page: "data.currPage",
-            total: "data.totalPage",
-            records: "data.totalCount"
-        },
-        prmNames: {
-            page: "page",
-            rows: "limit",
-            order: "order"
-        }
-    });
-</script>
-<script>
-
-    function reload() {
-        var page = $("#jqGrid").jqGrid('getGridParam', 'page');
-        $("#jqGrid").jqGrid('setGridParam', {
-            page: page
-        }).trigger("reloadGrid");
-    }
-
-    function categoryAdd() {
-        reset();
-        $('.modal-title').html('Add category');
-        $('#categoryModal').modal('show');
-    }
-
-    /**
-     * 管理下级分类
-     */
-    function categoryManage() {
-        var categoryLevel = parseInt($("#categoryLevel").val());
-        var parentId = $("#parentId").val();
-        var id = getSelectedRow();
-        if (id == undefined || id < 0) {
-            return false;
-        }
-        if (categoryLevel == 1 || categoryLevel == 2) {
-            categoryLevel = categoryLevel + 1;
-            window.location.href = '/admin/categories?categoryLevel=' + categoryLevel + '&parentId=' + id + '&backParentId=' + parentId;
-        } else {
-            swal("No subcategory", {
-                icon: "warning",
-            });
-        }
-    }
-
-    /**
-     * 返回上一层级
-     */
-    function categoryBack() {
-        var categoryLevel = parseInt($("#categoryLevel").val());
-        var backParentId = $("#backParentId").val();
-        if (categoryLevel == 2 || categoryLevel == 3) {
-            categoryLevel = categoryLevel - 1;
-            window.location.href = '/admin/categories?categoryLevel=' + categoryLevel + '&parentId=' + backParentId + '&backParentId=0';
-        } else {
-            swal("无上级分类", {
-                icon: "warning",
-            });
-        }
-    }
-
-    //绑定modal上的保存按钮
-    $('#saveButton').click(function () {
-        var categoryName = $("#categoryName").val();
-        var categoryLevel = $("#categoryLevel").val();
-        var parentId = $("#parentId").val();
-        var categoryRank = $("#categoryRank").val();
-        if (!validCN_ENString2_18(categoryName)) {
-            $('#edit-error-msg').css("display", "block");
-            $('#edit-error-msg').html("请输入符合规范的分类名称！");
-        } else {
-            var data = {
-                "categoryName": categoryName,
-                "categoryLevel": categoryLevel,
-                "parentId": parentId,
-                "categoryRank": categoryRank
-            };
-            var url = '/admin/categories/save';
-            var id = getSelectedRowWithoutAlert();
-            if (id != null) {
-                url = '/admin/categories/update';
-                data = {
-                    "categoryId": id,
-                    "categoryName": categoryName,
-                    "categoryLevel": categoryLevel,
-                    "parentId": parentId,
-                    "categoryRank": categoryRank
-                };
-            }
-            $.ajax({
-                type: 'POST',//方法类型
-                url: url,
-                contentType: 'application/json',
-                data: JSON.stringify(data),
-                success: function (result) {
-                    if (result.resultCode == 200) {
-                        $('#categoryModal').modal('hide');
-                        swal("SUCCESS", {
-                            icon: "success",
-                        });
-                        reload();
-                    } else {
-                        $('#categoryModal').modal('hide');
-                        swal(result.message, {
-                            icon: "error",
-                        });
-                    }
-                    ;
-                },
-                error: function () {
-                    swal("Failed", {
-                        icon: "error",
-                    });
-                }
-            });
-        }
-    });
-
-    function categoryEdit() {
-        reset();
-        var id = getSelectedRow();
-        if (id == null) {
-            return;
-        }
-        var rowData = $("#jqGrid").jqGrid("getRowData", id);
-        $('.modal-title').html('EDIT');
-        $('#categoryModal').modal('show');
-        $("#categoryId").val(id);
-        $("#categoryName").val(rowData.categoryName);
-        $("#categoryRank").val(rowData.categoryRank);
-    }
-
-
-    function reset() {
-        $("#categoryName").val('');
-        $("#categoryRank").val(0);
-        $('#edit-error-msg').css("display", "none");
-    }
-
-    function deleteCagegory() {
-        var ids = getSelectedRows();
-        if (ids == null) {
-            return;
-        }
-        swal({
-            title: "确认弹框",
-            text: "确认要删除数据吗?",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        }).then((flag) => {
-                if (flag) {
-                    $.ajax({
-                        type: "POST",
-                        url: "/admin/categories/delete",
-                        contentType: "application/json",
-                        data: JSON.stringify(ids),
-                        success: function (r) {
-                            if (r.resultCode == 200) {
-                                swal("删除成功", {
-                                    icon: "success",
-                                });
-                                $("#jqGrid").trigger("reloadGrid");
-                            } else {
-                                swal(r.message, {
-                                    icon: "error",
-                                });
-                            }
-                        }
-                    });
-                }
-            }
-        )
-        ;
-    }
-</script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<!--page script-->
+<script th:src="@{/dist/js/categories.js}"></script>
 </body>
 </html>

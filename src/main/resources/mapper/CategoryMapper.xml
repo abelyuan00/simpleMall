@@ -27,12 +27,11 @@
         where id=#{id}
     </update>
 
-    <delete id="deleteCategory" parameterType="String">
-        delete from category where name=#{name}
-    </delete>
-
     <delete id="deleteCategoryById" parameterType="long">
-        delete from category where id=#{id}
+        update category
+        set
+            is_deleted=true,update_time=CURRENT_TIME,editor_id=#{session.adminId}
+        where id=#{id}
     </delete>
 
     <select id="findCategoryByName" resultMap="CategoryResult">

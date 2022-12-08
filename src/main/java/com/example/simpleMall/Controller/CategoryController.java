@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 import java.util.Objects;
 
@@ -29,10 +30,15 @@ public class CategoryController {
 
 
     @GetMapping("/categories")
-    public String categoriesPage(HttpServletRequest request, @RequestParam("categoryLevel") Byte categoryLevel, @RequestParam("superiorId") Long superiorId) {
+    public String categoriesPage(HttpServletRequest request, @RequestParam("categoryLevel") Byte categoryLevel, @RequestParam("superiorId") Long superiorId, HttpSession session) {
         if (categoryLevel == null || categoryLevel < 1 || categoryLevel > 3) {
             return "error/500";
         }
+        if(session.getAttribute("adminId")==null){
+            session.setAttribute("loginRequest","please login as admin before operate");
+        }
+        else
+            session.removeAttribute("loginRequest");
         request.setAttribute("path", "categories");
 //        request.setAttribute("superiorId", superiorId);
 //        request.setAttribute("categoryLevel", categoryLevel);
@@ -88,7 +94,7 @@ public class CategoryController {
                     || Objects.isNull(category.getCategoryLevel())
                     || StringUtils.isEmpty(category.getName())
                     || Objects.isNull(category.getSuperiorId())) {
-                return ResultGen.genFailResult("参数异常！");
+                return ResultGen.genFailResult("No data Found");
             }
             String result = categoryService.updateCategory(category);
             if ("SUCCESS".equals(result)) {
@@ -106,7 +112,7 @@ public class CategoryController {
         public Result info(@PathVariable("id") Long id) {
             Category category = categoryService.getCategoryById(id);
             if (category == null) {
-                return ResultGen.genFailResult("未查询到数据");
+                return ResultGen.genFailResult("No data found");
             }
             return ResultGen.genSuccessResult(category);
         }
@@ -117,7 +123,6 @@ public class CategoryController {
         @RequestMapping(value = "/categories/delete", method = RequestMethod.POST)
         @ResponseBody
         public Result delete(@RequestBody Long id) {
-
             if (categoryService.deleteCategoryById(id)) {
                 return ResultGen.genSuccessResult();
             } else {

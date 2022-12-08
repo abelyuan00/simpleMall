@@ -24,14 +24,17 @@ public class Category {
     private Long id;
 
     /**
-     * 1 shoe - 2 sneaker - 3 nike
+     * represents belonging and subcategory relationships
+     * e.g. 1 shoe - 2 sneaker - 3 nike
+     * can go above 3
+     *
      */
     @Column
     @NotNull
     private Integer categoryLevel = 1;
 
     /**
-     * id of upper class(shoe - sneaker - Nike)
+     * id of superior category (shoe - sneaker - Nike)
      */
     @Column
     @NotNull

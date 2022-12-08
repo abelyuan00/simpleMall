@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /**
@@ -27,7 +28,7 @@ public class ProductController {
     //TODO
     //
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public Result list(@RequestParam Map<String, Object> params) {
+    public Result list(@RequestParam Map<String, Object> params, HttpSession session) {
         Result result = new Result();
         if (StringUtils.isEmpty(params.get("page")) || StringUtils.isEmpty(params.get("limit"))) {
             // error code

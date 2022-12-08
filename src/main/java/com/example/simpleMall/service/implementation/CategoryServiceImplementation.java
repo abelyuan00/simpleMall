@@ -51,7 +51,6 @@ public class CategoryServiceImplementation implements CategoryService {
         }
         Category temp2 = categoryDao.selectByLevelAndName(category.getCategoryLevel(), category.getName());
         if (temp2 != null && !temp2.getId().equals(category.getId())) {
-            //同名且不同id 不能继续修改
             return "SAME_CATEGORY_EXIST";
         }
         category.setUpdateTime(new Date());
@@ -68,7 +67,6 @@ public class CategoryServiceImplementation implements CategoryService {
 
     @Override
     public Boolean deleteCategoryById(Long id) {
-        //删除分类数据
         return categoryDao.deleteCategoryById(id) > 0;
     }
 

@@ -17,24 +17,29 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginInterceptor implements HandlerInterceptor {
 
     Logger log = org.slf4j.LoggerFactory.getLogger(this.getClass());
-//    @Override
-//    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
-//        String requestURI = request.getRequestURI();
-//        if (requestURI.startsWith("/admin") && null == request.getSession().getAttribute("adminId")) {
-//            request.getSession().setAttribute("errorMsg", "please log in");
-//            request.getSession().setAttribute("redirectTo",request.getRequestURL().toString());
-//            response.sendRedirect(request.getContextPath() + "/admin/login");
-//            return false;
-//        } else if (requestURI.startsWith("/customer") && null == request.getSession().getAttribute("customerId")) {
-//            request.getSession().setAttribute("errorMsg", "please log in");
-//            response.sendRedirect(request.getContextPath() + "/customer/login");
-//            return false;
-//        } else {
-//            request.getSession().removeAttribute("errorMsg");
-//            return true;
-//        }
-//
-//    }
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
+        String requestURI = request.getRequestURI();
+        if (requestURI.startsWith("/admin") && null == request.getSession().getAttribute("adminId")) {
+            request.getSession().setAttribute("errorMsg", "please log in");
+            String redirectTo = request.getRequestURI() + "?" + request.getQueryString();
+            if(null==request.getRequestURI()) {
+                redirectTo = null;
+            }
+            request.getSession().setAttribute("redirectTo",redirectTo);
+
+            response.sendRedirect(request.getContextPath() + "/admin/login");
+            return false;
+        } else if (requestURI.startsWith("/customer") && null == request.getSession().getAttribute("customerId")) {
+            request.getSession().setAttribute("errorMsg", "please log in");
+            response.sendRedirect(request.getContextPath() + "/customer/login");
+            return false;
+        } else {
+            request.getSession().removeAttribute("errorMsg");
+            return true;
+        }
+
+    }
 
 
     @Override

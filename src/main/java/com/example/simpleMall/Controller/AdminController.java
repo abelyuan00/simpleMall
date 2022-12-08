@@ -70,10 +70,9 @@ public class AdminController {
                 session.setAttribute("adminId", admin.getId());
                 session.removeAttribute("errorMsg");
                 String redirect = (String) session.getAttribute("redirectTo");
-                String port = environment.getProperty("local.server.port");
-                String [] redirects = redirect.split(port,2);
-                redirect = redirects[1];
-
+                if(null ==redirect){
+                    redirect = "/index";
+                }
                 if(null!=session.getAttribute("customerId")){
                     session.removeAttribute("customerId");
                 }

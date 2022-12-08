@@ -13,12 +13,6 @@ import java.util.List;
  **/
 public interface CategoryService {
 
-    /**
-     * 查询后台管理系统分类分页数据
-     *
-     * @param pageUtil
-     * @return
-     */
     PageResult getCategoryPage(PageQueryUtil pageUtil);
 
     String saveCategory(Category category);
