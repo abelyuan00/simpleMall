@@ -41,9 +41,15 @@ public class AdminServiceImplementation implements AdminService {
             throw new RuntimeException(e);
         }
         Boolean isPasswordMatches = encoder.matches(password,storedPassword);
-        if(isPasswordMatches) {
-            admin =  userLogin.loginAdmin(loginName);
-        }
+
+        String expectedStatus = userDao.findAdmin(loginName).getStatus().toString();
+
+        if (!isPasswordMatches)
+            throw new RuntimeException("Can not found admin user");
+        else if(userDao.findAdmin(loginName).getStatus().equals("locked"))
+            throw new RuntimeException("User locked, please contact admin");
+
+        admin =  userLogin.loginAdmin(loginName);
         return admin;
     }
 
@@ -67,6 +73,21 @@ public class AdminServiceImplementation implements AdminService {
         else
             return false;
 
+    }
+
+    @Override
+    public Boolean insertAdmin(String logInName, String password) {
+        try{
+            Admin newAdmin = new Admin();
+            newAdmin.setLoginName(logInName);
+            newAdmin.encodePassword(password);
+            newAdmin.generateCode();
+            userDao.insertAdmin(newAdmin);
+            return true;
+        }
+        catch (Exception e){
+            return false;
+        }
     }
 
     @Override

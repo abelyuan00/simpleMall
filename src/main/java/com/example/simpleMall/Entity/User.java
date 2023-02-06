@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 /**
  * @author : HaiZhou Yuan
@@ -17,7 +18,7 @@ import java.util.Date;
 @MappedSuperclass
 @Getter
 @Setter
-public class User {
+public sealed class User permits Admin, Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,6 +45,7 @@ public class User {
     //locked or normal
     @Column
     private String status;
+
     //customer or admin
     @Column(nullable = false)
     private String role;
@@ -51,7 +53,8 @@ public class User {
     public void generateCode(){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         String date =sdf.format(new Date());
-        code = date+loginName+role;
+        Random random = new Random();
+        code = role+Math.abs(random.nextInt())+loginName+date;
     }
 
     public void encodePassword(String raw){

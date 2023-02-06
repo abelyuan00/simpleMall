@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.util.Date;
 
 /**
  * @author : HaiZhou Yuan
@@ -17,7 +18,7 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @Table
-public class Customer extends User{
+public non-sealed class Customer extends User{
 
     @Column
     @NotNull
@@ -29,6 +30,12 @@ public class Customer extends User{
     @Column
     private String name;
 
+    public Customer() {
+        setRole("customer");
+        setCreatedTime(new Date());
+        setUpdateTime(new Date());
+        setStatus("normal");
+    }
 
 
 }

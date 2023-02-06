@@ -15,6 +15,8 @@ public interface AdminService {
 
     Boolean updatePassword(String logInName, String oldPass, String newPass);
 
+    Boolean insertAdmin(String logInName, String password);
+
     Admin loadAdmin(Long adminId);
 
     PageResult getPageListResult(PageQueryUtil pageUtil);

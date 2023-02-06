@@ -1,12 +1,14 @@
 package com.example.simpleMall.Entity;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import java.util.Date;
 
 /**
  * @author : HaiZhou Yuan
@@ -17,14 +19,16 @@ import javax.persistence.UniqueConstraint;
 @Getter
 @Setter
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "loginName" }) })
-public class Admin extends User{
+public non-sealed class Admin extends User{
 
-    @Override
-    public void generateCode() {
+//    @Column
+//    @NonNull
+//    private String adminCode;
 
+    public Admin() {
+        setRole("admin");
+        setCreatedTime(new Date());
+        setUpdateTime(new Date());
+        setStatus("normal");
     }
-
-    @Column
-    private String adminCode;
-
 }

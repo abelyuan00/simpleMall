@@ -36,6 +36,7 @@ public class AdminController {
 
 
 
+
     @GetMapping({"/admin/profile"})
     public String profileAdmin() {
         return "admin/profileAdmin";
@@ -58,6 +59,16 @@ public class AdminController {
         return "admin/loginAdmin";
     }
 
+
+//    @PostMapping({"/addAdmin"})
+//    public String firstAdmin(String loginName, String password) {
+//        Boolean result = adminService.insertAdmin(loginName,password);
+//        if(result){
+//            return "SUCCESS";
+//        }
+//        else
+//            return "FAILED";
+//    }
 
     @PostMapping(value = "/admin/login")
     public String loginAdmin(@RequestParam("loginName") String loginName,
@@ -91,7 +102,7 @@ public class AdminController {
                 session.setAttribute("errorMsg", "Can not find user with given name");
             }
             else
-                session.setAttribute("errorMsg", "Error occurred, Please check error message");
+                session.setAttribute("errorMsg", e.getMessage());
 
             log.error(e.getMessage());
             return "redirect:/admin/login";

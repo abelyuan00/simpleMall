@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="../../dist/css/alt/adminlte.light.min.css">
   <!-- icheck bootstrap -->
   <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Theme style -->
@@ -31,7 +32,7 @@
             </div>
             <div class="form-group has-feedback">
               <span class="fa fa-user form-control-feedback"></span>
-              <input type="text" id="loginName" name="loginName" class="form-control" placeholder="loginName"
+              <input type="text" id="loginName" name="loginName" class="form-control" placeholder="account name"
                      required="true">
             </div>
             <div class="form-group has-feedback">
@@ -49,6 +50,12 @@
               </div>
             </div>
           </form>
+          <div class="social-auth-links text-center mb-3">
+            <p>- OR -</p>
+            <a th:href="@{/admin/register}" class="btn btn-block btn-primary">
+              <i class="fa fa-cash-register"></i> Register
+            </a>
+          </div>
     </div>
     <!-- /.login-card-body -->
   </div>
