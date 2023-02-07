@@ -32,4 +32,9 @@ public class IndexController {
         return "product/productList";
     }
 
+    @GetMapping("/chart")
+    public String chart(){
+        return "customer/chartjs";
+    }
+
 }

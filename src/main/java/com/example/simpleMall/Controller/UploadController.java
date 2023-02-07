@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -27,20 +28,20 @@ import java.util.*;
 public class UploadController {
 
 
-    @Autowired
+    @Resource
     private StandardServletMultipartResolver standardServletMultipartResolver;
 
-    private final static String FILE_UPLOAD_PATH = "C:\\upload\\";
+    private final static String FILE_UPLOAD_PATH = "D:\\file\\upload\\";
     //Pic mapping need to use path with prefix "file:"
 
 
-    @GetMapping({"/upload/test"})
-    public String uploadTest() {
+    @GetMapping({"/upload/singleFile"})
+    public String uploadSingleFile() {
         return "upload";
     }
 
 
-    @RequestMapping(value = "/upload/test", method = RequestMethod.POST)
+    @RequestMapping(value = "/upload/singleFile", method = RequestMethod.POST)
     @ResponseBody
     public String uploadFile(@RequestParam("file") MultipartFile file, HttpSession session) {
         if (file.isEmpty()) {
@@ -53,7 +54,8 @@ public class UploadController {
         Random r = new Random();
         StringBuilder tempName = new StringBuilder();
         tempName.append(sdf.format(new Date())).append(r.nextInt(100)).append(suffixName);
-        String newFileName = tempName.toString();
+        String customerID =  session.getAttribute("customerId") != null? session.getAttribute("customerId").toString():null ;
+        String newFileName = "customer_" + customerID +"_"+tempName.toString();
         if(null!=session.getAttribute("customerId")) {
             newFileName = "customer " + session.getAttribute("customerId").toString() + newFileName;
         }
@@ -62,52 +64,53 @@ public class UploadController {
             byte[] bytes = file.getBytes();
             Path path = Paths.get(FILE_UPLOAD_PATH + newFileName);
             Files.write(path, bytes);
+            System.out.println("[File uploaded], file path = D:/file/upload/" + newFileName);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "[File uploaded], file path = /upload/" + newFileName;
+        return "[File uploaded], file path = D:/file/upload/" + newFileName;
     }
 
 
-    //deal with multiple file upload with same names
-    @RequestMapping(value = "/upload/filesBySameName", method = RequestMethod.POST)
-    @ResponseBody
-    //multiple file would use requestPart other than requestParam
-    //param should have the same name as html input tag name <input type="file" name="files"/><br><br>
-    public String uploadFilesBySameName(@RequestPart MultipartFile[] files) {
-        if (files == null || files.length == 0) {
-            return "Empty file or file not selected";
-        }
-        if (files.length > 5) {
-            return "No more than 5 files";
-        }
-        String uploadResult = "Uploaded，path : <br>";
-//        Arrays.stream(files).forEach(file->{});
-        for (MultipartFile file : files) {
-            String fileName = file.getOriginalFilename();
-            if (StringUtils.isEmpty(fileName)) {
-                //no file, break loop
-                continue;
-            }
-            String suffixName = fileName.substring(fileName.lastIndexOf("."));
-            //file name generator
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
-            Random r = new Random();
-            StringBuilder tempName = new StringBuilder();
-            tempName.append(sdf.format(new Date())).append(r.nextInt(100)).append(suffixName);
-            String newFileName = tempName.toString();
-            try {
-                // save file
-                byte[] bytes = file.getBytes();
-                Path path = Paths.get(FILE_UPLOAD_PATH + newFileName);
-                Files.write(path, bytes);
-                uploadResult += "/upload/" + newFileName + "<br>";
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return uploadResult;
-    }
+//    //deal with multiple file upload with same names
+//    @RequestMapping(value = "/upload/filesBySameName", method = RequestMethod.POST)
+//    @ResponseBody
+//    //multiple file would use requestPart other than requestParam
+//    //param should have the same name as html input tag name <input type="file" name="files"/><br><br>
+//    public String uploadFilesBySameName(@RequestPart MultipartFile[] files) {
+//        if (files == null || files.length == 0) {
+//            return "Empty file or file not selected";
+//        }
+//        if (files.length > 5) {
+//            return "No more than 5 files";
+//        }
+//        String uploadResult = "Uploaded，path : <br>";
+////        Arrays.stream(files).forEach(file->{});
+//        for (MultipartFile file : files) {
+//            String fileName = file.getOriginalFilename();
+//            if (StringUtils.isEmpty(fileName)) {
+//                //no file, break loop
+//                continue;
+//            }
+//            String suffixName = fileName.substring(fileName.lastIndexOf("."));
+//            //file name generator
+//            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+//            Random r = new Random();
+//            StringBuilder tempName = new StringBuilder();
+//            tempName.append(sdf.format(new Date())).append(r.nextInt(100)).append(suffixName);
+//            String newFileName = tempName.toString();
+//            try {
+//                // save file
+//                byte[] bytes = file.getBytes();
+//                Path path = Paths.get(FILE_UPLOAD_PATH + newFileName);
+//                Files.write(path, bytes);
+//                uploadResult += "/upload/" + newFileName + "<br>";
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        return uploadResult;
+//    }
 
 
 //    @RequestMapping(value = "/upload/filesByDifferentName", method = RequestMethod.POST)

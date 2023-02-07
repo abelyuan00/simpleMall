@@ -34,7 +34,11 @@ public class LoginInterceptor implements HandlerInterceptor {
             request.getSession().setAttribute("errorMsg", "please log in");
             response.sendRedirect(request.getContextPath() + "/customer/login");
             return false;
-        } else {
+        } else if (requestURI.startsWith("/download") && null == request.getSession().getAttribute("customerId")) {
+            request.getSession().setAttribute("errorMsg", "please log in");
+            response.sendRedirect(request.getContextPath() + "/customer/login");
+            return false;
+        }else {
             request.getSession().removeAttribute("errorMsg");
             return true;
         }
