@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Registration Page</title>
+  <title>Simple Mall | Registration Page</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -18,14 +18,14 @@
 <body class="hold-transition register-page">
 <div class="register-box">
   <div class="register-logo">
-    <a href="../../index2.html"><b>Admin</b>LTE</a>
+    <a th:href="@{/index}"><b>Simple</b>Mall</a>
   </div>
 
   <div class="card">
     <div class="card-body register-card-body">
-      <p class="login-box-msg">Register a new admin</p>
+      <p class="login-box-msg">Become a new customer</p>
 
-      <form th:action="@{/admin/addAdmin}" method="post">
+      <form th:action="@{/customer/registerCustomer}" method="post">
 <!--        <div th:if="${not #strings.isEmpty(session.errorMsg)}" class="form-group">-->
 <!--          <div class="alert alert-danger" th:text="${session.errorMsg}"></div>-->
 <!--        </div>-->
@@ -63,16 +63,19 @@
           </div>
         </div>
         <div id="divCheckPassword"></div>
+
+          <div class="g-recaptcha" data-sitekey="your_site_key"></div>
+
         <div class="row">
           <!-- /.col -->
           <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Register</button>
+            <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
           </div>
           <!-- /.col -->
         </div>
       </form>
       
-      <a href="/admin/login" class="text-center">Back to admin login</a>
+      <a href="/admin/login" class="text-center">Back to customer login</a>
     </div>
     <!-- /.form-box -->
   </div><!-- /.card -->
@@ -85,6 +88,7 @@
 <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script>
   function isPasswordMatch() {
     var password = $("#txtNewPassword").val();
