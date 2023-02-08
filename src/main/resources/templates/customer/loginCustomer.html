@@ -17,7 +17,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="../../index.html">Simple Mall</a>
+    <a th:href="@{/index}"><b>Simple</b>Mall</a>
   </div>
   <!-- /.login-logo -->
   <div class="card">
@@ -31,34 +31,31 @@
             </div>
             <div class="form-group has-feedback">
               <span class="fa fa-user form-control-feedback"></span>
-              <input type="text" id="loginName" name="loginName" class="form-control" placeholder="loginName"
+              <input type="text" id="loginName" name="loginName" class="form-control" placeholder="Log in Name"
                      required="true">
             </div>
             <div class="form-group has-feedback">
               <span class="fa fa-lock form-control-feedback"></span>
-              <input type="password" id="password" name="password" class="form-control" placeholder="password"
+              <input type="password" id="password" name="password" class="form-control" placeholder="Password"
                      required="true">
             </div>
             <div class="form-group has-feedback"></div>
             <div class="row">
-              <div class="col-8">
-              </div>
               <div class="col-4">
                 <button type="submit" class="btn btn-primary btn-block btn-flat">Log In
                 </button>
               </div>
             </div>
           </form>
-      <!-- /.social-auth-links -->
 
       <p class="mb-2">
         <a href="forgot-password.html">I forgot my password</a>
       </p>
       <p class="mb-1">
-        <a href="../register.html" class="text-center">Register a new membership</a>
+        <a th:href="@{/customer/register}" class="text-center">Register a new membership</a>
       </p>
       <p class="mb-0">
-        <a th:href="@{/loginAdmin}" class="text-center">login as System admin</a>
+        <a th:href="@{/admin/login}" class="text-center">login as System admin</a>
       </p>
     </div>
     <!-- /.login-card-body -->

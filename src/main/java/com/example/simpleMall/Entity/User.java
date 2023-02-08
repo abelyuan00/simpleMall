@@ -25,9 +25,11 @@ public sealed class User permits Admin, Customer {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    //Generated in mapper
     @Column
     private Date createdTime;
 
+    //Generated in mapper
     @Column
     private Date updateTime;
 
@@ -49,6 +51,9 @@ public sealed class User permits Admin, Customer {
     //customer or admin
     @Column(nullable = false)
     private String role;
+
+    @Column(unique = true,nullable = false)
+    private String email;
 
     public void generateCode(){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");

@@ -41,8 +41,8 @@
 
 
     <insert id="insertCustomer" parameterType="com.example.simpleMall.Entity.Customer">
-        insert into customer(login_name,name,password,code,role,status,created_time,update_time)
-        values(#{loginName},#{name},#{password},#{code},#{role},#{status},CURRENT_TIME,CURRENT_TIME)
+        insert into customer(login_name,name,password,code,role,address,email,status,created_time,update_time)
+        values(#{loginName},#{name},#{password},#{code},#{role},#{address},#{email},#{status},CURRENT_TIME,CURRENT_TIME)
     </insert>
 
     <update id="updateCustomer" parameterType="com.example.simpleMall.Entity.Customer">
