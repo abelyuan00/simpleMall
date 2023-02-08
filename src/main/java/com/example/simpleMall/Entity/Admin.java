@@ -27,8 +27,6 @@ public non-sealed class Admin extends User{
 
     public Admin() {
         setRole("admin");
-        setCreatedTime(new Date());
-        setUpdateTime(new Date());
         setStatus("normal");
     }
 }

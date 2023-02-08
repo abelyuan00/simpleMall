@@ -30,10 +30,10 @@ public non-sealed class Customer extends User{
     @Column
     private String name;
 
+
+
     public Customer() {
         setRole("customer");
-        setCreatedTime(new Date());
-        setUpdateTime(new Date());
         setStatus("normal");
     }
 

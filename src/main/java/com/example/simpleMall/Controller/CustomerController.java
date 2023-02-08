@@ -30,6 +30,10 @@ public class CustomerController {
         return "customer/profileCustomer";
     }
 
+    @GetMapping({"/customer/register"})
+    public String registerCustomer() {
+        return "customer/registerCustomer";
+    }
 
     @PostMapping(value = "/customer/login")
     public String loginCustomer(@RequestParam("loginName") String loginName,

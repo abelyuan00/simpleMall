@@ -2,6 +2,7 @@ package com.example.simpleMall.service;
 
 import com.example.simpleMall.Entity.Admin;
 import com.example.simpleMall.Entity.Customer;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author : HaiZhou Yuan
@@ -15,4 +16,6 @@ public interface CustomerService {
     Customer loadCustomer(Long customerId);
 
     Boolean updatePassword(String loginName, String passwordOld, String passwordNew);
+
+    Boolean registerCustomer(@RequestParam String newLoginName, @RequestParam String password,@RequestParam String email, String customerName, String address);
 }

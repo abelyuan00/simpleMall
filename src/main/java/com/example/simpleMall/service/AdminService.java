@@ -15,7 +15,7 @@ public interface AdminService {
 
     Boolean updatePassword(String logInName, String oldPass, String newPass);
 
-    Boolean insertAdmin(String logInName, String password);
+    Boolean insertAdmin(String logInName, String password, String email);
 
     Admin loadAdmin(Long adminId);
 

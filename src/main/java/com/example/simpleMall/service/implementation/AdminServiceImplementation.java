@@ -76,10 +76,11 @@ public class AdminServiceImplementation implements AdminService {
     }
 
     @Override
-    public Boolean insertAdmin(String logInName, String password) {
+    public Boolean insertAdmin(String logInName, String password,String email) {
         try{
             Admin newAdmin = new Admin();
             newAdmin.setLoginName(logInName);
+            newAdmin.setEmail(email);
             newAdmin.encodePassword(password);
             newAdmin.generateCode();
             userDao.insertAdmin(newAdmin);

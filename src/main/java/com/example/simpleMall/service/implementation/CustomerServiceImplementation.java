@@ -72,4 +72,9 @@ public class CustomerServiceImplementation implements CustomerService {
         else
             return false;
     }
+
+    @Override
+    public Boolean registerCustomer(String newLoginName, String password, String email, String customerName, String address) {
+        return null;
+    }
 }
