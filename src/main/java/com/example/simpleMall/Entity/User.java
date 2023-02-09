@@ -65,6 +65,5 @@ public sealed class User permits Admin, Customer {
     public void encodePassword(String raw){
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         password = encoder.encode(raw);
-        //        Boolean isPasswordMatches = encoder.matches("123456", password);
     }
 }

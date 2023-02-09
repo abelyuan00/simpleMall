@@ -77,33 +77,22 @@ public class AdminController {
         Logger log = org.slf4j.LoggerFactory.getLogger(this.getClass());
         try {
             Admin admin = adminService.login(loginName, password);
-            if (admin != null) {
-                session.setAttribute("adminId", admin.getId());
-                session.removeAttribute("errorMsg");
-                String redirect = (String) session.getAttribute("redirectTo");
-                if(null ==redirect){
-                    redirect = "/index";
-                }
-                if(null!=session.getAttribute("customerId")){
-                    session.removeAttribute("customerId");
-                }
-                //keep session alive for 7200 second
-                session.setMaxInactiveInterval(60 * 60 * 2);
-                return "redirect:"+redirect;
+            session.setAttribute("adminId", admin.getId());
+            session.removeAttribute("errorMsg");
+            String redirect = (String) session.getAttribute("redirectTo");
+            if(null ==redirect){
+                redirect = "/index";
             }
-            else {
-
-                session.setAttribute("errorMsg", "password do not match");
-                return "redirect:/admin/login";
+            if(null!=session.getAttribute("customerId")){
+                session.removeAttribute("customerId");
             }
+            //keep session alive for 7200 second
+            session.setMaxInactiveInterval(60 * 60 * 2);
+            session.removeAttribute("errorMsg");
+            return "redirect:"+redirect;
         }
-        catch (RuntimeException e){
-            if(e.getCause() instanceof NullPointerException){
-                session.setAttribute("errorMsg", "Can not find user with given name");
-            }
-            else
-                session.setAttribute("errorMsg", e.getMessage());
-
+        catch (Exception e){
+            session.setAttribute("errorMsg", e.getMessage());
             log.error(e.getMessage());
             return "redirect:/admin/login";
         }

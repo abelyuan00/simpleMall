@@ -42,12 +42,10 @@ public class AdminServiceImplementation implements AdminService {
         }
         Boolean isPasswordMatches = encoder.matches(password,storedPassword);
 
-        String expectedStatus = userDao.findAdmin(loginName).getStatus().toString();
-
         if (!isPasswordMatches)
-            throw new RuntimeException("Can not found admin user");
+            throw new RuntimeException("Password did not match, please try again");
         else if(userDao.findAdmin(loginName).getStatus().equals("locked"))
-            throw new RuntimeException("User locked, please contact admin");
+            throw new RuntimeException("User locked, please contact other admin");
 
         admin =  userLogin.loginAdmin(loginName);
         return admin;

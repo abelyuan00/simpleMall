@@ -7,5 +7,5 @@ import java.io.FileNotFoundException;
 
 public interface DownloadService {
 
-    ResponseEntity<Resource> download(String filePath) throws FileNotFoundException;
+    ResponseEntity<Resource> download(String filePath) throws Exception;
 }
