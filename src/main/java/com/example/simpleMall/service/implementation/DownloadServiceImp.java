@@ -55,7 +55,7 @@ public class DownloadServiceImp implements DownloadService {
 
         MediaType mediaType = MediaTypeFactory
                 .getMediaType(resource)
-                .orElse(MediaType.APPLICATION_OCTET_STREAM);
+                .orElse(MediaType.TEXT_PLAIN);
 
         headers.setContentType(mediaType);
 

@@ -1,18 +1,13 @@
 package com.example.simpleMall.Controller;
 
 import com.example.simpleMall.Entity.Customer;
-import com.example.simpleMall.Util.PageQueryUtil;
-import com.example.simpleMall.Util.PageResult;
-import com.example.simpleMall.Util.Result;
 import com.example.simpleMall.service.CustomerService;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import java.util.Map;
 
 @Controller
 public class CustomerController {
@@ -35,6 +30,11 @@ public class CustomerController {
         return "customer/registerCustomer";
     }
 
+    @GetMapping({"/customer/downloadFile"})
+    public String downloadFile() {
+        return "customer/downloadFile";
+    }
+
     @PostMapping(value = "/customer/login")
     public String loginCustomer(@RequestParam("loginName") String loginName,
                                 @RequestParam("password") String password,
@@ -51,7 +51,8 @@ public class CustomerController {
                 session.removeAttribute("errorMsg");
                 //keep session alive for 7200 second
                 session.setMaxInactiveInterval(60 * 60 * 2);
-                return "redirect:/index";
+                String redirect = (String) session.getAttribute("redirectTo");
+                return "redirect:"+redirect;
             }
             else {
                 session.setAttribute("errorMsg", "password do not match");

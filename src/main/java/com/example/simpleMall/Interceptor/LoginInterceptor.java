@@ -20,21 +20,22 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
         String requestURI = request.getRequestURI();
+//        String redirectTo = null;
+//        if(null!=request.getRequestURI()) {
+//            redirectTo = request.getRequestURI() + "?" + request.getQueryString();
+//        }
         if (requestURI.startsWith("/admin") && null == request.getSession().getAttribute("adminId")) {
             request.getSession().setAttribute("errorMsg", "please log in");
-            String redirectTo = request.getRequestURI() + "?" + request.getQueryString();
-            if(null==request.getRequestURI()) {
-                redirectTo = null;
-            }
-            request.getSession().setAttribute("redirectTo",redirectTo);
-
+            request.getSession().setAttribute("redirectTo",requestURI);
             response.sendRedirect(request.getContextPath() + "/admin/login");
             return false;
         } else if (requestURI.startsWith("/customer") && null == request.getSession().getAttribute("customerId")) {
+            request.getSession().setAttribute("redirectTo",requestURI);
             request.getSession().setAttribute("errorMsg", "please log in");
             response.sendRedirect(request.getContextPath() + "/customer/login");
             return false;
         } else if (requestURI.startsWith("/download") && null == request.getSession().getAttribute("customerId")) {
+            request.getSession().setAttribute("redirectTo",requestURI);
             request.getSession().setAttribute("errorMsg", "please log in");
             response.sendRedirect(request.getContextPath() + "/customer/login");
             return false;

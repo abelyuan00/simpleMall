@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="header-fragment">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" th:href="@{/dist/img/AdminLTELogo.png}"/>
+  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/v4-shims.min.css">
+  <link rel="stylesheet" href="../../plugins/jqgrid/ui.jqgrid-bootstrap4.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+</head>
+<body class="hold-transition sidebar-mini">
+
+<!--div defines a section in a document-->
+<div class="wrapper">
+  <div th:replace="header::header-nav"></div>
+  <div th:replace="sidebar::sidebar-fragment(${path})"></div>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- Main content -->
+    <div class="content">
+      <div class="card card-primary card-outline">
+
+        <div class="card-header">
+          <nav>
+            <a th:href="@{/static}" class="brand-link"></a>
+            <span class="brand-text font-weight-light">Subscription files</span>
+          </nav>
+        </div> <!-- /.card-body -->
+        <div class="card-body">
+          <div class="grid-btn">
+            <div class="form-group">
+              <button id="downloadSubFile">Download </button>
+            </div>
+            <nav>
+              <a th:href="@{/download/filePath?path=additional/subs.txt}" class="brand-link"> download test</a>
+            </nav>
+          </div>
+        </div>
+
+      </div><!-- /.container-fluid -->
+    </div>
+
+
+        </div>
+
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <!-- 引入页脚footer-fragment -->
+</div>
+  <div th:replace="footer::footer-fragment"></div>
+<!-- jQuery -->
+<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script th:src="@{/plugins/jquery-ui/jquery-ui.min.js}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/dist/js/adminlte.min.js}"></script>
+<script th:src="@{/plugins/jqgrid/jquery.jqGrid.min.js}"></script>
+<script th:src="@{/plugins/jqgrid/grid.locale-en.js}"></script>
+<script th:src="@{/dist/js/downloadFile.js}"></script>
+
+<script>
+
+
+</script>
+
+</body>
+</html>

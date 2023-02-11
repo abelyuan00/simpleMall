@@ -22,7 +22,7 @@ public class FileController {
 
     @GetMapping(value="/download/filePath")
     @ResponseBody
-    public ResponseEntity<Resource> downloadFile(HttpSession session, @RequestParam("data") String filePath) throws Exception {
+    public ResponseEntity<Resource> downloadFile(HttpSession session, @RequestParam("path") String filePath) throws Exception {
         return downloadService.download(filePath);
     }
 }
