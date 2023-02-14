@@ -4,6 +4,8 @@ import com.example.simpleMall.Entity.Admin;
 import com.example.simpleMall.Entity.Customer;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * @author : HaiZhou Yuan
  * @mailto : abelyuan0822@gmail.com
@@ -18,4 +20,6 @@ public interface CustomerService {
     Boolean updatePassword(String loginName, String passwordOld, String passwordNew);
 
     Boolean registerCustomer(@RequestParam String newLoginName, @RequestParam String password,@RequestParam String email, String customerName, String address);
+
+    String getSubInfo(HttpSession session);
 }

@@ -31,7 +31,15 @@
         <result property="status" jdbcType="VARCHAR" column="status"/>
         <result property="updateTime" column="update_time"/>
         <result property="adminCode" jdbcType="VARCHAR" column="admin_code"/>
+    </resultMap>
 
+    <resultMap id="CustomerResourceResult" type="com.example.simpleMall.Entity.customerResources" >
+        <id property="id" column="id"/>
+        <result property="customerId" column="customerId"/>
+        <result property="createdTime" column="created_time"/>
+        <result property="usedData" jdbcType="NUMERIC" column="used_data"/>
+        <result property="subFilePath" jdbcType="VARCHAR" column="sub_file_path"/>
+        <result property="updateTime" column="update_time"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -104,6 +112,17 @@
 
     <select id="getTotalCustomer" parameterType="Map" resultType="int">
         select count(*) from customer
+    </select>
+
+
+    <insert id="insertCustomerResources" parameterType="com.example.simpleMall.Entity.Customer">
+        insert into customer(login_name,name,password,code,role,address,email,status,created_time,update_time)
+        values(#{loginName},#{name},#{password},#{code},#{role},#{address},#{email},#{status},CURRENT_TIME,CURRENT_TIME)
+    </insert>
+
+    <select id="getCustomerResources" parameterType="long" resultType="CustomerResourceResult">
+        select * from customer_resources
+        where customer_id = #{customerId,jdbcType=BIGINT}
     </select>
 
 </mapper>

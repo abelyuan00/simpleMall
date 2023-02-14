@@ -1,9 +1,6 @@
 package com.example.simpleMall.Dao;
 
-import com.example.simpleMall.Entity.Admin;
-import com.example.simpleMall.Entity.Customer;
-import com.example.simpleMall.Entity.Product;
-import com.example.simpleMall.Entity.User;
+import com.example.simpleMall.Entity.*;
 import com.example.simpleMall.Util.PageQueryUtil;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -43,6 +40,8 @@ public interface UserDao {
     List<Customer> getCustomerList(PageQueryUtil pageUtil);
 
     Integer getTotalCustomer(PageQueryUtil pageUtil);
+
+    CustomerResources getCustomerResources(@Param("customerId")Long customerId);
 
 
 

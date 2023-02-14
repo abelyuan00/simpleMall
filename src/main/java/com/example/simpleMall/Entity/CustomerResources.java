@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.hibernate.annotations.ForeignKey;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * @author : HaiZhou Yuan
@@ -17,6 +18,8 @@ import javax.persistence.*;
 @Setter
 @Table
 public class CustomerResources {
+
+    //resource ID
     @Id
     @Column(name = "id", nullable = false)
     private Long id;
@@ -25,10 +28,23 @@ public class CustomerResources {
     @JoinColumn(name = "customerId", referencedColumnName = "id")
     private Customer customer;
 
+    //link to subscription file relative path
     @Column
     private String subFileAddress;
 
+    //How much bandwidth have been consumed
     @Column
     private Double usedData;
+
+    @Column
+    private Double quota;
+
+    //Generated in mapper
+    @Column
+    private Date createdTime;
+
+    //Generated in mapper
+    @Column
+    private Date updateTime;
 
 }

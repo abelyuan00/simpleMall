@@ -4,11 +4,13 @@ import com.example.simpleMall.Dao.UserDao;
 import com.example.simpleMall.Dao.UserLogin;
 import com.example.simpleMall.Entity.Admin;
 import com.example.simpleMall.Entity.Customer;
+import com.example.simpleMall.Entity.CustomerResources;
 import com.example.simpleMall.service.CustomerService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author : HaiZhou Yuan
@@ -76,5 +78,18 @@ public class CustomerServiceImplementation implements CustomerService {
     @Override
     public Boolean registerCustomer(String newLoginName, String password, String email, String customerName, String address) {
         return null;
+    }
+
+    @Override
+    public String getSubInfo(HttpSession session) {
+        Long customerId = Long.valueOf((String) session.getAttribute("customerId"));
+        Customer customer = userDao.findCustomerById(customerId);
+        if("locked".equals(customer.getStatus())){
+            session.setAttribute("accountError","Your bandwidth quota is used up, please contact admin");
+            return "customer/downloadFile";
+        }
+        CustomerResources customerResources = userDao.getCustomerResources(customerId);
+
+        return "customer/downloadFile";
     }
 }

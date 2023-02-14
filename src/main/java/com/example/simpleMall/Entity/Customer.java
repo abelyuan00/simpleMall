@@ -20,17 +20,16 @@ import java.util.Date;
 @Table
 public non-sealed class Customer extends User{
 
+    //how many quota a customer have per month
     @Column
     @NotNull
-    private Integer membershipLevel = 0;
+    private Integer membershipLevel = 1;
 
     @Column
     private String address;
 
     @Column
     private String name;
-
-
 
     public Customer() {
         setRole("customer");

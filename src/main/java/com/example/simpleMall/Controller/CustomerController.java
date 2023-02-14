@@ -2,6 +2,7 @@ package com.example.simpleMall.Controller;
 
 import com.example.simpleMall.Entity.Customer;
 import com.example.simpleMall.service.CustomerService;
+import lombok.Synchronized;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +34,11 @@ public class CustomerController {
     @GetMapping({"/customer/downloadFile"})
     public String downloadFile() {
         return "customer/downloadFile";
+    }
+
+    @GetMapping({"/customer/changePassword"})
+    public String changePassword() {
+        return "customer/changePassword";
     }
 
     @PostMapping(value = "/customer/login")
@@ -70,10 +76,7 @@ public class CustomerController {
         }
     }
 
-    @GetMapping({"/customer/changePassword"})
-    public String changePassword() {
-        return "customer/changePassword";
-    }
+
 
     @PostMapping(value = "/customer/changePassword")
     public String changePassword(@RequestParam("originalPassword") String originalPassword,
@@ -93,5 +96,15 @@ public class CustomerController {
             session.setAttribute("errorMsg","Original Password did not match, please try again");
         return "customer/changePassword";
     }
+
+    @GetMapping("/customer/getSubInfo")
+    public synchronized String getSubInfo(HttpSession session){
+        if(null!=session.getAttribute("customerId")){
+            session.setAttribute("errorMsg","Please log in");
+            return "customer/loginCustomer";
+        }
+        return customerService.getSubInfo(session);
+    }
+
 
 }
