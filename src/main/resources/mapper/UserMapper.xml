@@ -33,15 +33,6 @@
         <result property="adminCode" jdbcType="VARCHAR" column="admin_code"/>
     </resultMap>
 
-    <resultMap id="CustomerResourceResult" type="com.example.simpleMall.Entity.customerResources" >
-        <id property="id" column="id"/>
-        <result property="customerId" column="customerId"/>
-        <result property="createdTime" column="created_time"/>
-        <result property="usedData" jdbcType="NUMERIC" column="used_data"/>
-        <result property="subFilePath" jdbcType="VARCHAR" column="sub_file_path"/>
-        <result property="updateTime" column="update_time"/>
-    </resultMap>
-
     <sql id="Base_Column_List">
         id,login_name,code,password,admin_code,role,status,created_time
     </sql>
@@ -115,12 +106,19 @@
     </select>
 
 
-    <insert id="insertCustomerResources" parameterType="com.example.simpleMall.Entity.Customer">
-        insert into customer(login_name,name,password,code,role,address,email,status,created_time,update_time)
-        values(#{loginName},#{name},#{password},#{code},#{role},#{address},#{email},#{status},CURRENT_TIME,CURRENT_TIME)
+    <insert id="insertCustomerResources" parameterType="com.example.simpleMall.Entity.CustomerResources">
+        insert into customer_resources(customer_id,used_data,sub_file_path,quota,created_time,update_time)
+        values(#{customerId},#{usedData},#{subFilePath},#{quota},CURRENT_TIME,CURRENT_TIME)
     </insert>
 
-    <select id="getCustomerResources" parameterType="long" resultType="CustomerResourceResult">
+    <update id="updateCustomerResources" parameterType="com.example.simpleMall.Entity.CustomerResources">
+        update customer_resources
+        set
+            quota=#{quota},usedData=#{usedData},update_time=CURRENT_TIME,sub_file_path=#{subFilePath}
+        where customer_id=#{customerId,jdbcType=BIGINT}
+    </update>
+
+    <select id="getCustomerResources" parameterType="long" resultType="com.example.simpleMall.Entity.CustomerResources">
         select * from customer_resources
         where customer_id = #{customerId,jdbcType=BIGINT}
     </select>
