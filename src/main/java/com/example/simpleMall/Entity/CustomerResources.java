@@ -30,7 +30,7 @@ public class CustomerResources {
 
     //link to subscription file relative path
     @Column
-    private String subFileAddress;
+    private String subFilePath;
 
     //How much bandwidth have been consumed
     @Column
@@ -46,5 +46,8 @@ public class CustomerResources {
     //Generated in mapper
     @Column
     private Date updateTime;
+
+    @Column
+    private String picPath;
 
 }

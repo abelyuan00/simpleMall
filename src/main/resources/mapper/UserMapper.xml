@@ -114,7 +114,7 @@
     <update id="updateCustomerResources" parameterType="com.example.simpleMall.Entity.CustomerResources">
         update customer_resources
         set
-            quota=#{quota},usedData=#{usedData},update_time=CURRENT_TIME,sub_file_path=#{subFilePath}
+            quota=#{quota},usedData=#{usedData},update_time=CURRENT_TIME,sub_file_path=#{subFilePath},pic_path=#{picPath}
         where customer_id=#{customerId,jdbcType=BIGINT}
     </update>
 

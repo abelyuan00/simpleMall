@@ -4,6 +4,7 @@ import com.example.simpleMall.Dao.UserDao;
 import com.example.simpleMall.Dao.UserLogin;
 import com.example.simpleMall.Entity.Admin;
 import com.example.simpleMall.Entity.Customer;
+//import com.example.simpleMall.Entity.CustomerResources;
 import com.example.simpleMall.Entity.CustomerResources;
 import com.example.simpleMall.service.CustomerService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
