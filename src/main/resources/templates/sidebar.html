@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+<meta charset="utf-8">
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <!--  aside: 	Defines content aside from the page content-->
 <aside th:fragment="sidebar-fragment(path)" class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a th:href="@{/index}" class="brand-link">
-        <img th:src="@{/dist/img/gearIcon.png}" alt="ssm-cluster Logo"
+        <img th:src="@{tabIcon.ico}" alt="ssm-cluster Logo"
              class="brand-image img-circle elevation-3"
              style="opacity: .8">
         <!--      span: Defines a section in a document-->
@@ -13,7 +14,7 @@
     <div class="sidebar">
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                <img id="user-icon" alt="User Icon" class="img-circle elevation-2">
             </div>
             <div class="info">
                 <a href="#" class="d-block">Example User</a>
@@ -81,5 +82,33 @@
             </ul>
         </nav>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+        // make an Ajax request to the server to get the iconPath
+                $.ajax({
+                    type: "GET",
+                    url: "/getUserIconPath",
+                    data: {},
+                    success: function(response) {
+                        // check if the response contains an iconPath
+                        if (response.iconPath) {
+                            // if the iconPath exists, set the background image of the div to the iconPath
+                            $('#user-icon').attr('src', response.iconPath);
+                        } else {
+                            // if the iconPath doesn't exist, set the background image to a blank image
+                            $('#user-icon').attr('src', '[[@{/dist/img/boxed-bg.png}]]');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                    }
+                });
+            });
+    </script>
 </aside>
+
 </html>
+
+
+
