@@ -55,6 +55,9 @@ public sealed class User permits Admin, Customer {
     @Column(unique = true,nullable = false)
     private String email;
 
+    @Column(unique = true)
+    private String iconPath;
+
     public void generateCode(){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         String date =sdf.format(new Date());

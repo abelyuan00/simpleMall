@@ -31,6 +31,7 @@
         <result property="status" jdbcType="VARCHAR" column="status"/>
         <result property="updateTime" column="update_time"/>
         <result property="adminCode" jdbcType="VARCHAR" column="admin_code"/>
+        <result property="iconPath" jdbcType="VARCHAR" column="icon_path"/>
     </resultMap>
 
     <sql id="Base_Column_List">

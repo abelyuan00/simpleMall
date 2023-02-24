@@ -47,7 +47,5 @@ public class CustomerResources {
     @Column
     private Date updateTime;
 
-    @Column
-    private String picPath;
 
 }
