@@ -52,24 +52,34 @@ public class IndexController {
         return "customer/chartjs";
     }
 
+    @GetMapping("/2048")
+    public String game(){
+        return "index2048";
+    }
+
     @GetMapping ("/getUserIconPath")
     @ResponseBody
     public Map<String, String> getUserIconPath(HttpSession session) {
         Map<String, String> response = new HashMap<>();
         String iconPath = null;
+        String userName = null;
         Admin admin = null;
-        User user = null;
+        Customer customer = null;
         Long id = (Long)session.getAttribute("adminId");
         if(null!=session.getAttribute("adminId")) {
             admin = adminService.loadAdmin(Long.valueOf(id));
             iconPath = admin.getIconPath();
+            userName = admin.getNickname();
         }
 
         else if (null==session.getAttribute("adminId")&&null!=session.getAttribute("customerId")) {
-            user = customerService.loadCustomer(Long.valueOf((String) session.getAttribute("adminId")));
-            iconPath = user.getIconPath();
+            customer = customerService.loadCustomer(Long.valueOf((String) session.getAttribute("adminId")));
+            iconPath = customer.getIconPath();
+            userName = customer.getNickname();
         }
-            response.put("iconPath", iconPath);
+
+        response.put("iconPath", iconPath);
+        response.put("userName",userName);
         return response;
     }
 }
