@@ -31,7 +31,7 @@ public class UploadController {
     @Resource
     private StandardServletMultipartResolver standardServletMultipartResolver;
 
-    private final static String FILE_UPLOAD_PATH = "D:\\file\\upload\\";
+    private final static String FILE_UPLOAD_PATH = "C:\\AllWork\\Project\\simpleMall\\src\\main\\resources\\static\\dist\\img";
     //Pic mapping need to use path with prefix "file:"
 
 

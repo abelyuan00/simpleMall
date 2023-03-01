@@ -40,6 +40,12 @@ public sealed class User permits Admin, Customer {
     @Column
     private String code;
 
+    @Column
+    private String nickname;
+
+    @Column
+    private String uuid;
+
     @Column(unique = true)
     @NotNull
     private String loginName;

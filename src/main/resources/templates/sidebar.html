@@ -17,7 +17,7 @@
                 <img id="user-icon" alt="User Icon" class="img-circle elevation-2">
             </div>
             <div class="info">
-                <a href="#" class="d-block">Example User</a>
+                <span id="user-name" class="brand-text font-weight-bold"></span>
             </div>
         </div>
         <nav class="mt-2">
@@ -83,29 +83,7 @@
         </nav>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-        // make an Ajax request to the server to get the iconPath
-                $.ajax({
-                    type: "GET",
-                    url: "/getUserIconPath",
-                    data: {},
-                    success: function(response) {
-                        // check if the response contains an iconPath
-                        if (response.iconPath) {
-                            // if the iconPath exists, set the background image of the div to the iconPath
-                            $('#user-icon').attr('src', response.iconPath);
-                        } else {
-                            // if the iconPath doesn't exist, set the background image to a blank image
-                            $('#user-icon').attr('src', '[[@{/dist/img/boxed-bg.png}]]');
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.log(error);
-                    }
-                });
-            });
-    </script>
+    <script th:src="@{/dist/js/sidebar.js}"></script>
 </aside>
 
 </html>
