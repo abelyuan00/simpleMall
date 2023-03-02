@@ -45,10 +45,10 @@ public class CustomerServiceImplementation implements CustomerService {
     }
 
     @Override
-    public Customer loadCustomer(Long id) {
+    public Customer loadCustomer(Long userId) {
         Customer customer = null;
         try {
-            customer = userDao.findCustomerById(id);
+            customer = userDao.findCustomerById(userId);
         } catch (Exception e){
             throw new RuntimeException(e);
         }

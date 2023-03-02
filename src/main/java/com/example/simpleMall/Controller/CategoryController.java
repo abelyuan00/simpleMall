@@ -34,11 +34,11 @@ public class CategoryController {
         if (categoryLevel == null || categoryLevel < 1 || categoryLevel > 3) {
             return "error/500";
         }
-        if(session.getAttribute("adminId")==null){
-            session.setAttribute("loginRequest","please login as admin before operate");
+        if(null==session.getAttribute("userId") || !"admin".equals(session.getAttribute("role"))){
+            session.setAttribute("errorMsg","Please login an admin account before operate");
         }
         else
-            session.removeAttribute("loginRequest");
+            session.removeAttribute("errorMsg");
         request.setAttribute("path", "categories");
 //        request.setAttribute("superiorId", superiorId);
 //        request.setAttribute("categoryLevel", categoryLevel);

@@ -24,22 +24,33 @@ public class LoginInterceptor implements HandlerInterceptor {
 //        if(null!=request.getRequestURI()) {
 //            redirectTo = request.getRequestURI() + "?" + request.getQueryString();
 //        }
-        if (requestURI.startsWith("/admin") && null == request.getSession().getAttribute("adminId")) {
-            request.getSession().setAttribute("errorMsg", "please log in");
-            request.getSession().setAttribute("redirectTo",requestURI);
-            response.sendRedirect(request.getContextPath() + "/admin/login");
-            return false;
-        } else if (requestURI.startsWith("/customer") && null == request.getSession().getAttribute("customerId")) {
-            request.getSession().setAttribute("redirectTo",requestURI);
-            request.getSession().setAttribute("errorMsg", "please log in");
-            response.sendRedirect(request.getContextPath() + "/customer/login");
-            return false;
-        } else if (requestURI.startsWith("/download") && null == request.getSession().getAttribute("customerId")) {
-            request.getSession().setAttribute("redirectTo",requestURI);
-            request.getSession().setAttribute("errorMsg", "please log in");
-            response.sendRedirect(request.getContextPath() + "/customer/login");
-            return false;
-        }else {
+
+        if (requestURI.startsWith("/admin"))
+            if(null == request.getSession().getAttribute("userId")||!"admin".equals(request.getSession().getAttribute("role"))) {
+                request.getSession().setAttribute("errorMsg", "please log in");
+                request.getSession().setAttribute("redirectTo", requestURI);
+                response.sendRedirect(request.getContextPath() + "/admin/login");
+                return false;
+            } else
+                return true;
+
+        else if (requestURI.startsWith("/customer"))
+            if(null == request.getSession().getAttribute("userId")||!"customer".equals(request.getSession().getAttribute("role"))) {
+                request.getSession().setAttribute("errorMsg", "please log in");
+                request.getSession().setAttribute("redirectTo", requestURI);
+                response.sendRedirect(request.getContextPath() + "/customer/login");
+                return false;
+            } else
+                return true;
+
+        else if (requestURI.startsWith("/download")) {
+            if(null == request.getSession().getAttribute("userId")||!"customer".equals(request.getSession().getAttribute("role")))
+                request.getSession().setAttribute("redirectTo",requestURI);
+                request.getSession().setAttribute("errorMsg", "please log in");
+                response.sendRedirect(request.getContextPath() + "/customer/login");
+                return false;
+        }
+        else {
             request.getSession().removeAttribute("errorMsg");
             return true;
         }

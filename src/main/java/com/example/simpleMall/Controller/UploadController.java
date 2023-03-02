@@ -44,6 +44,7 @@ public class UploadController {
     @RequestMapping(value = "/upload/singleFile", method = RequestMethod.POST)
     @ResponseBody
     public String uploadFile(@RequestParam("file") MultipartFile file, HttpSession session) {
+        String customerID = null;
         if (file.isEmpty()) {
             return "Upload Failed";
         }
@@ -54,11 +55,9 @@ public class UploadController {
         Random r = new Random();
         StringBuilder tempName = new StringBuilder();
         tempName.append(sdf.format(new Date())).append(r.nextInt(100)).append(suffixName);
-        String customerID =  session.getAttribute("customerId") != null? session.getAttribute("customerId").toString():null ;
+        if(null!=session.getAttribute("userId") && "customer".equals(session.getAttribute("role")))
+        customerID = (String) session.getAttribute("userId");
         String newFileName = "customer_" + customerID +"_"+tempName.toString();
-        if(null!=session.getAttribute("customerId")) {
-            newFileName = "customer " + session.getAttribute("customerId").toString() + newFileName;
-        }
         try {
             // saving file
             byte[] bytes = file.getBytes();

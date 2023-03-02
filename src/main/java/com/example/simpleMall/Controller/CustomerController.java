@@ -47,21 +47,18 @@ public class CustomerController {
                                 HttpSession session) {
         Logger log = org.slf4j.LoggerFactory.getLogger(this.getClass());
         try {
-            if(null!=session.getAttribute("adminId")){
-                session.setAttribute("errorMsg","Please log out admin account first");
-                return "customer/loginCustomer";
-            }
             Customer customer = customerService.login(loginName, password);
             if (customer != null) {
-                session.setAttribute("customerId", customer.getId());
+                session.setAttribute("userId", customer.getId());
+                session.setAttribute("role", customer.getRole());
                 session.removeAttribute("errorMsg");
                 //keep session alive for 7200 second
                 session.setMaxInactiveInterval(60 * 60 * 2);
-                String redirect = (String) session.getAttribute("redirectTo");
+                String redirect = (String) session.getAttribute("redirectTo") ==null? "/index":(String) session.getAttribute("redirectTo") ;
                 return "redirect:"+redirect;
             }
             else {
-                session.setAttribute("errorMsg", "password do not match");
+                session.setAttribute("errorMsg", "Can't find the combination");
                 return "customer/loginCustomer";
             }
         }
@@ -83,11 +80,11 @@ public class CustomerController {
                                  @RequestParam("newPassword") String newPassword,
                                  HttpSession session) {
 
-        if(null==session.getAttribute("customerId")){
+        if(null==session.getAttribute("userId") || !"customer".equals(session.getAttribute("role"))){
             session.setAttribute("errorMsg","Please log in before change password");
             return "customer/changePassword";
         }
-        String loginName = customerService.loadCustomer((Long) session.getAttribute("customerId")).getLoginName();
+        String loginName = customerService.loadCustomer((Long) session.getAttribute("userId")).getLoginName();
         Boolean result = customerService.updatePassword(loginName,originalPassword,newPassword);
         if (result){
             session.setAttribute("successMsg","Password updated");
@@ -99,7 +96,7 @@ public class CustomerController {
 
     @GetMapping("/customer/getSubInfo")
     public synchronized String getSubInfo(HttpSession session){
-        if(null!=session.getAttribute("customerId")){
+        if(null==session.getAttribute("userId") || !"customer".equals(session.getAttribute("role"))){
             session.setAttribute("errorMsg","Please log in");
             return "customer/loginCustomer";
         }

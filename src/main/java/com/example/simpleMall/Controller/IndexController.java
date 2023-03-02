@@ -39,7 +39,7 @@ public class IndexController {
     @GetMapping({"/logout"})
     public String logout(HttpSession session) {
         session.invalidate();
-        return "index";
+        return "redirect:/index";
     }
 
     @GetMapping("/product")
@@ -65,17 +65,17 @@ public class IndexController {
         String userName = null;
         Admin admin = null;
         Customer customer = null;
-        Long id = (Long)session.getAttribute("adminId");
-        if(null!=session.getAttribute("adminId")) {
-            admin = adminService.loadAdmin(Long.valueOf(id));
-            iconPath = admin.getIconPath();
-            userName = admin.getNickname();
-        }
-
-        else if (null==session.getAttribute("adminId")&&null!=session.getAttribute("customerId")) {
-            customer = customerService.loadCustomer(Long.valueOf((String) session.getAttribute("adminId")));
-            iconPath = customer.getIconPath();
-            userName = customer.getNickname();
+        Long id = (Long)session.getAttribute("userId");
+        if(null!=session.getAttribute("userId") && null!=session.getAttribute("role")) {
+            if ("admin".equals(session.getAttribute("role"))) {
+                admin = adminService.loadAdmin(id);
+                iconPath = admin.getIconPath() == null? "dist/img/minions.jpg" :admin.getIconPath() ;
+                userName = admin.getNickname();
+            } else if ("customer".equals(session.getAttribute("role"))){
+                customer = customerService.loadCustomer(id);
+                iconPath = customer.getIconPath() == null? "dist/img/minions.jpg": customer.getIconPath();
+                userName = customer.getNickname();
+            }
         }
 
         response.put("iconPath", iconPath);

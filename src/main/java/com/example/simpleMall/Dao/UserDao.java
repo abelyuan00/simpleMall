@@ -31,17 +31,17 @@ public interface UserDao {
 
     Admin findAdmin(@Param("loginName")String loginName);
 
-    Admin findAdminById(@Param("adminId")Long adminId);
+    Admin findAdminById(@Param("userId")Long adminId);
 
     Customer findCustomer(@Param("loginName")String loginName);
 
-    Customer findCustomerById(@Param("customerId")Long customerId);
+    Customer findCustomerById(@Param("userId")Long customerId);
 
     List<Customer> getCustomerList(PageQueryUtil pageUtil);
 
     Integer getTotalCustomer(PageQueryUtil pageUtil);
 
-    CustomerResources getCustomerResources(@Param("customerId")Long customerId);
+    CustomerResources getCustomerResources(@Param("userId")Long customerId);
 
 
 

@@ -30,7 +30,7 @@
     <delete id="deleteCategoryById" parameterType="long">
         update category
         set
-            is_deleted=true,update_time=CURRENT_TIME,editor_id=#{session.adminId}
+            is_deleted=true,update_time=CURRENT_TIME,editor_id=#{session.userId}
         where id=#{id}
     </delete>
 

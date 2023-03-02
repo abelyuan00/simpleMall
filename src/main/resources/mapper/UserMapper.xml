@@ -80,7 +80,7 @@
 
     <select id="findCustomerById" resultMap="CustomerResult">
         select * from customer
-        where id = #{customerId,jdbcType=BIGINT}
+        where id = #{userId,jdbcType=BIGINT}
     </select>
 
     <select id="findAdmin" resultMap="AdminResult">
@@ -90,7 +90,7 @@
 
     <select id="findAdminById" resultMap="AdminResult">
         select * from admin
-        where id = #{adminId,jdbcType=BIGINT}
+        where id = #{userId,jdbcType=BIGINT}
     </select>
 
     <select id="getCustomerList" parameterType="Map" resultMap="CustomerListResult">
@@ -116,12 +116,12 @@
         update customer_resources
         set
             quota=#{quota},usedData=#{usedData},update_time=CURRENT_TIME,sub_file_path=#{subFilePath},pic_path=#{picPath}
-        where customer_id=#{customerId,jdbcType=BIGINT}
+        where customer_id=#{userId,jdbcType=BIGINT}
     </update>
 
     <select id="getCustomerResources" parameterType="long" resultType="com.example.simpleMall.Entity.CustomerResources">
         select * from customer_resources
-        where customer_id = #{customerId,jdbcType=BIGINT}
+        where customer_id = #{userId,jdbcType=BIGINT}
     </select>
 
 </mapper>

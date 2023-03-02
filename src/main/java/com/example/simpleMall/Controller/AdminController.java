@@ -75,17 +75,13 @@ public class AdminController {
                              @RequestParam("password") String password,
                              HttpSession session) {
         Logger log = org.slf4j.LoggerFactory.getLogger(this.getClass());
+
         try {
             Admin admin = adminService.login(loginName, password);
-            session.setAttribute("adminId", admin.getId());
+            session.setAttribute("userId", admin.getId());
+            session.setAttribute("role", admin.getRole());
             session.removeAttribute("errorMsg");
-            String redirect = (String) session.getAttribute("redirectTo");
-            if(null ==redirect){
-                redirect = "/index";
-            }
-            if(null!=session.getAttribute("customerId")){
-                session.removeAttribute("customerId");
-            }
+            String redirect = (String) session.getAttribute("redirectTo")==null?"/index":(String) session.getAttribute("redirectTo");
             //keep session alive for 7200 second
             session.setMaxInactiveInterval(60 * 60 * 2);
             session.removeAttribute("errorMsg");
@@ -103,11 +99,12 @@ public class AdminController {
                                  @RequestParam("newPassword") String newPassword,
                                  HttpSession session) {
 
-        if(null==session.getAttribute("adminId")){
+        if(null==session.getAttribute("userId") || !"admin".equals(session.getAttribute("role"))){
             session.setAttribute("errorMsg","Please log in before change password");
-            return "admin/changePassword";
+            return "admin/login";
         }
-        String loginName = adminService.loadAdmin((Long) session.getAttribute("adminId")).getLoginName();
+
+        String loginName = adminService.loadAdmin((Long) session.getAttribute("userId")).getLoginName();
         Boolean result = adminService.updatePassword(loginName,originalPassword,newPassword);
         if (result){
             session.setAttribute("successMsg","Password updated");
