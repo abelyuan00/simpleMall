@@ -5,7 +5,6 @@ import com.example.simpleMall.Util.PageQueryUtil;
 import com.example.simpleMall.Util.PageResult;
 import com.example.simpleMall.Util.Result;
 import com.example.simpleMall.service.AdminService;
-import org.apache.ibatis.jdbc.Null;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -59,16 +58,22 @@ public class AdminController {
         return "admin/loginAdmin";
     }
 
+    @GetMapping({"/admin/registerAdmin"})
+    public String registerAdmin() {
+        return "admin/registerAdmin";
+    }
 
-//    @PostMapping({"/addAdmin"})
-//    public String firstAdmin(String loginName, String password) {
-//        Boolean result = adminService.insertAdmin(loginName,password);
-//        if(result){
-//            return "SUCCESS";
-//        }
-//        else
-//            return "FAILED";
-//    }
+
+    @PostMapping({"/admin/addAdmin"})
+    public String firstAdmin(@RequestParam("loginName") String loginName, @RequestParam("password")String password, String email,String nickname,HttpSession session) {
+        Boolean result = adminService.insertAdmin(loginName,password,email,nickname);
+        if(result){
+            return "redirect:/mainPage";
+        }
+        else
+            session.setAttribute("error","Add new admin failed");
+            return "/admin/registerAdmin";
+    }
 
     @PostMapping(value = "/admin/login")
     public String loginAdmin(@RequestParam("loginName") String loginName,
@@ -81,7 +86,7 @@ public class AdminController {
             session.setAttribute("userId", admin.getId());
             session.setAttribute("role", admin.getRole());
             session.removeAttribute("errorMsg");
-            String redirect = (String) session.getAttribute("redirectTo")==null?"/index":(String) session.getAttribute("redirectTo");
+            String redirect = (String) session.getAttribute("redirectTo")==null?"/main":(String) session.getAttribute("redirectTo");
             //keep session alive for 7200 second
             session.setMaxInactiveInterval(60 * 60 * 2);
             session.removeAttribute("errorMsg");

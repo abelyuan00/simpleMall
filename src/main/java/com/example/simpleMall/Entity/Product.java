@@ -1,5 +1,6 @@
 package com.example.simpleMall.Entity;
 
+import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,6 +25,7 @@ public class Product {
 
     //product code
     @Column
+    @NotNull
     private String code;
 
     @Column
@@ -33,13 +35,26 @@ public class Product {
      * normal or locked
      */
     @Column
-    private String status;
+    private String status = "normal";
 
     @Column
+    @NotNull
     private String productName;
 
     @Column
     private String description;
+
+    @Column
+    private Double price;
+
+    @Column
+    private Date createTime;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "editorId", referencedColumnName = "id")
+    private Admin admin;
+
+    @Column
 
     public void generateCode(){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");

@@ -31,6 +31,9 @@ public non-sealed class Customer extends User{
     @Column
     private String name;
 
+    @Column(unique = true,nullable = false)
+    private String email;
+
     public Customer() {
         setRole("customer");
         setStatus("normal");

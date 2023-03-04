@@ -24,15 +24,16 @@ import java.util.UUID;
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "loginName" }) })
 public non-sealed class Admin extends User{
 
+    @Column(unique = true,nullable = false)
+    private String email;
     @Column
-    @NonNull
-    private String adminCode;
-
+    private final String uuid;
 
     public Admin() {
         setRole("admin");
         setStatus("normal");
-        UUID uuid = UUID.randomUUID();
-        setAdminCode(uuid.toString());
+        uuid = String.valueOf(UUID.randomUUID());
     }
+
+
 }

@@ -54,7 +54,7 @@ public class CustomerController {
                 session.removeAttribute("errorMsg");
                 //keep session alive for 7200 second
                 session.setMaxInactiveInterval(60 * 60 * 2);
-                String redirect = (String) session.getAttribute("redirectTo") ==null? "/index":(String) session.getAttribute("redirectTo") ;
+                String redirect = (String) session.getAttribute("redirectTo") ==null? "/main":(String) session.getAttribute("redirectTo") ;
                 return "redirect:"+redirect;
             }
             else {

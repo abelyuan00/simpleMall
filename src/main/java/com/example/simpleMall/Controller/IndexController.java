@@ -3,10 +3,8 @@ package com.example.simpleMall.Controller;
 
 import com.example.simpleMall.Entity.Admin;
 import com.example.simpleMall.Entity.Customer;
-import com.example.simpleMall.Entity.User;
 import com.example.simpleMall.service.AdminService;
 import com.example.simpleMall.service.CustomerService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,17 +27,19 @@ public class IndexController {
     @Resource
     CustomerService customerService;
 
-    @GetMapping({"/index"})
-    public String index() {
-        return "index";
+    @GetMapping({"/main"})
+    public String mainPage() {
+        return "mainPage";
     }
 
+    @GetMapping("/index")
+    public String index() {return "index"; }
 
 
     @GetMapping({"/logout"})
     public String logout(HttpSession session) {
         session.invalidate();
-        return "redirect:/index";
+        return "redirect:/main";
     }
 
     @GetMapping("/product")
@@ -54,14 +54,14 @@ public class IndexController {
 
     @GetMapping("/2048")
     public String game(){
-        return "index2048";
+        return "2048Game";
     }
 
     @GetMapping ("/getUserIconPath")
     @ResponseBody
     public Map<String, String> getUserIconPath(HttpSession session) {
         Map<String, String> response = new HashMap<>();
-        String iconPath = null;
+        String iconPath = "../../dist/img/boxed-bg.jpg";
         String userName = null;
         Admin admin = null;
         Customer customer = null;

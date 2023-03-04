@@ -90,7 +90,6 @@ public class CustomerServiceImplementation implements CustomerService {
             return "customer/downloadFile";
         }
         CustomerResources customerResources = userDao.getCustomerResources(customerId);
-
         return "customer/downloadFile";
     }
 }

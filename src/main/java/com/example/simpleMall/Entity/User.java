@@ -2,6 +2,7 @@ package com.example.simpleMall.Entity;
 
 import com.sun.istack.NotNull;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -34,20 +35,19 @@ public sealed class User permits Admin, Customer {
     private Date updateTime;
 
     @Column
-    @NotNull
+    @NonNull
     private String password;
 
     @Column
+
     private String code;
 
     @Column
+    @NonNull
     private String nickname;
 
     @Column
-    private String uuid;
-
-    @Column(unique = true)
-    @NotNull
+    @NonNull
     private String loginName;
 
     //locked or normal
@@ -55,14 +55,12 @@ public sealed class User permits Admin, Customer {
     private String status;
 
     //customer or admin
-    @Column(nullable = false)
-    private String role;
+    @Column
+    private String role = "customer";
 
-    @Column(unique = true,nullable = false)
-    private String email;
-
-    @Column(unique = true)
+    @Column
     private String iconPath;
+
 
     public void generateCode(){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");

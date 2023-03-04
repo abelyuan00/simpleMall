@@ -57,8 +57,8 @@
     </delete>
 
     <insert id="insertAdmin" parameterType="com.example.simpleMall.Entity.Admin">
-        insert into admin(login_name,password,code,role,status,created_time,update_time)
-        values(#{loginName},#{password},#{code},#{role},#{status},CURRENT_TIME,CURRENT_TIME)
+        insert into admin(login_name,password,code,role,status,email,nickname,uuid,created_time,update_time)
+        values(#{loginName},#{password},#{code},#{role},#{status},#{email},#{nickname},#{uuid},CURRENT_TIME,CURRENT_TIME)
     </insert>
 
     <update id="updateAdmin" parameterType="com.example.simpleMall.Entity.Admin">

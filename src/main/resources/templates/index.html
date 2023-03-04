@@ -1,70 +1,54 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:fragment="header-fragment">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" th:href="@{dist/img/gearIcon.png}"/>
-  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
-  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
-  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/v4-shims.min.css">
-  <link rel="stylesheet" href="../../plugins/jqgrid/ui.jqgrid-bootstrap4.css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Page</title>
+    <link rel="stylesheet" href="../../dist/css/style.css" />
+    <link rel="stylesheet" href="../../dist/css/bootstrap.min.css">
 </head>
-<body class="hold-transition sidebar-mini">
-
-<!--div defines a section in a document-->
-<div class="wrapper">
-  <div th:replace="header::header-nav"></div>
-  <div th:replace="sidebar::sidebar-fragment(${path})"></div>
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- Main content -->
-    <div class="content">
-      <div class="card card-primary card-outline">
-
-        <div class="card-header">
-          <nav>
-            <a th:href="@{/}" class="brand-link"></a>
-            <span class="brand-text font-weight-light">Title</span>
-          </nav>
-        </div> <!-- /.card-body -->
-        <div class="card-body">
-          <div class="grid-btn">
-            <nav>
-              <button onclick="window.location.href='admin/customerManage'">Customer Manage</button>
-            </nav>
-            <nav>
-              <a th:href="@{/admin/product}" class="brand-link"> product</a>
-            </nav>
-          </div>
+<body>
+<section id="hero">
+    <div class="container" data-aos="fade-up">
+        <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="150">
+            <div class="col-xl-6 col-lg-8">
+                <h1>Simple Mall <span>.</span></h1>
+                <h2>This is for display only</h2>
+            </div>
         </div>
+        <div class="row gy-4 mt-5 justify-content-center" data-aos="zoom-in" data-aos-delay="250">
+            <div class="col-xl-2 col-md-4">
+                <div class="icon-box">
+                    <i class="ri-store-line"></i>
+                    <h3><a th:href="@{/main}">Customer Entry</a></h3>
+                </div>
 
-      </div><!-- /.container-fluid -->
-    </div>
-
-
+            </div>
+            <div class="col-xl-2 col-md-4">
+                <div class="icon-box">
+                    <i class="ri-bar-chart-box-line"></i>
+                    <h3><a href="">Sign up</a></h3>
+                </div>
+            </div>
+            <div class="col-xl-2 col-md-4">
+                <div class="icon-box">
+                    <i class="ri-calendar-todo-line"></i>
+                    <h3><a href="">Contact</a></h3>
+                </div>
+            </div>
+            <div class="col-xl-2 col-md-4">
+                <div class="icon-box">
+                    <i class="ri-paint-brush-line"></i>
+                    <h3><a href="">Resources</a></h3>
+                </div>
+            </div>
+            <div class="col-xl-2 col-md-4">
+                <div class="icon-box">
+                    <i class="ri-database-2-line"></i>
+                    <h3><a href="">Documents</a></h3>
+                </div>
+            </div>
         </div>
-
-      </div><!-- /.container-fluid -->
     </div>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
-</div>
-  <div th:replace="footer::footer-fragment"></div>
-<!-- jQuery -->
-<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
-<!-- jQuery UI 1.11.4 -->
-<script th:src="@{/plugins/jquery-ui/jquery-ui.min.js}"></script>
-<!-- Bootstrap 4 -->
-<script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
-<!-- AdminLTE App -->
-<script th:src="@{/dist/js/adminlte.min.js}"></script>
-<script th:src="@{/plugins/jqgrid/jquery.jqGrid.min.js}"></script>
-<script th:src="@{/plugins/jqgrid/grid.locale-en.js}"></script>
+</section><!-- End Hero -->
 </body>
 </html>
