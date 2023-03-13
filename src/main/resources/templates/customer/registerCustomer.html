@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Simple Mall | Registration Page</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -13,7 +14,7 @@
   <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <link rel="stylesheet" href="../../plugins/fontawesome-free/css/fontawesome.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="../../dist/css/adminlte.min.css"><script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body class="hold-transition register-page">
 <div class="register-box">
@@ -24,8 +25,7 @@
   <div class="card">
     <div class="card-body register-card-body">
       <p class="login-box-msg">Become a new customer</p>
-
-      <form th:action="@{/customer/registerCustomer}" method="post">
+      <form id="registerForm" th:action="@{/customer/register/submitInfo}" method="post">
 <!--        <div th:if="${not #strings.isEmpty(session.errorMsg)}" class="form-group">-->
 <!--          <div class="alert alert-danger" th:text="${session.errorMsg}"></div>-->
 <!--        </div>-->
@@ -63,19 +63,18 @@
           </div>
         </div>
         <div id="divCheckPassword"></div>
-
-          <div class="g-recaptcha" data-sitekey="your-key" required="true"></div>
-
+          <div class="g-recaptcha" data-sitekey="6LeeuFwkAAAAAE0DTi5k3CXFExMElVPNgQDR-tN_" data-callback="onSubmit" data-size="normal" required></div>
+        <p> </p>
         <div class="row">
           <!-- /.col -->
           <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
+            <button id="submitBtn" class="btn btn-primary btn-block btn-flat" onclick="onSubmit">Register</button>
           </div>
           <!-- /.col -->
         </div>
       </form>
       
-      <a href="/admin/login" class="text-center">Back to customer login</a>
+      <a href="/customer/login" class="text-center" >Back to customer login</a>
     </div>
     <!-- /.form-box -->
   </div><!-- /.card -->
@@ -89,18 +88,22 @@
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script src="../../dist/js/registerCustomer.js"></script>
 <script>
-  function isPasswordMatch() {
-    var password = $("#txtNewPassword").val();
-    var confirmPassword = $("#txtConfirmPassword").val();
+    function onSubmit() {
+        // Validate the reCAPTCHA response
+        var form = document.getElementById("registerForm");
+        var recaptchaResponse = grecaptcha.getResponse();
+        if (recaptchaResponse.length == 0) {
+            // The reCAPTCHA was not validated
+            alert("Please complete the reCAPTCHA");
+            return false;
+        }
+        // The reCAPTCHA was validated, submit the form
+        form.submit();
+    }
 
-    if (password != confirmPassword) $("#divCheckPassword").html("Passwords do not match!");
-    else $("#divCheckPassword").html("Passwords match.");
-  }
-
-  $(document).ready(function () {
-    $("#txtConfirmPassword").keyup(isPasswordMatch);
-  });
 </script>
+
 </body>
 </html>

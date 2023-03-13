@@ -19,7 +19,7 @@ public interface CustomerService {
 
     Boolean updatePassword(String loginName, String passwordOld, String passwordNew);
 
-    Boolean registerCustomer(@RequestParam String newLoginName, @RequestParam String password,@RequestParam String email, String customerName, String address);
+    Boolean registerCustomer(@RequestParam String loginName, @RequestParam String password,@RequestParam String email) throws Exception;
 
     String getSubInfo(HttpSession session);
 }

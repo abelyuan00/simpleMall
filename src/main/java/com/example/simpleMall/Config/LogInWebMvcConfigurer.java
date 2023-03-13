@@ -22,7 +22,7 @@ public class LogInWebMvcConfigurer implements WebMvcConfigurer {
                 .addPathPatterns("/admin/**")
                 .excludePathPatterns("/admin/login")
                 .addPathPatterns("/customer/**")
-                .excludePathPatterns("/customer/register")
+                .excludePathPatterns("/customer/register/**")
                 .excludePathPatterns("/customer/login");
     }
 }

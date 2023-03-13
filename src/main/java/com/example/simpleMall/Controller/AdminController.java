@@ -23,7 +23,7 @@ import java.util.Map;
  **/
 
 @Controller
-
+@RequestMapping("/admin")
 public class AdminController {
 
 
@@ -33,95 +33,114 @@ public class AdminController {
     @Autowired
     Environment environment;
 
-
-
-
-    @GetMapping({"/admin/profile"})
+    @GetMapping({"/profile"})
     public String profileAdmin() {
         return "admin/profileAdmin";
     }
 
     //Used in
-    @GetMapping({"/admin/changePassword"})
+    @GetMapping({"/changePassword"})
     public String changePassword() {
-        return "admin/changePassword";
+        return "admin/changePasswordAdmin";
     }
 
     //change customer information other than password
-    @GetMapping({"/admin/customerManage"})
+    @GetMapping({"/customerManage"})
     public String customerManage() {
         return "admin/customerManage";
     }
 
-    @GetMapping({"/admin/login"})
+    @GetMapping({"/login"})
     public String loginAdmin() {
         return "admin/loginAdmin";
     }
 
-    @GetMapping({"/admin/registerAdmin"})
+    @GetMapping({"/registerAdmin"})
     public String registerAdmin() {
         return "admin/registerAdmin";
     }
 
+    @GetMapping({"/editAdmin"})
+    public String editAdmin() {
+        return "admin/editAdmin";
+    }
 
-    @PostMapping({"/admin/addAdmin"})
-    public String firstAdmin(@RequestParam("loginName") String loginName, @RequestParam("password")String password, String email,String nickname,HttpSession session) {
+
+    @PostMapping({"/addAdmin"})
+    public String addAdmin(@RequestParam("loginName") String loginName, @RequestParam("password")String password, String email,String nickname,HttpSession session) {
         Boolean result = adminService.insertAdmin(loginName,password,email,nickname);
         if(result){
             return "redirect:/mainPage";
         }
         else
-            session.setAttribute("error","Add new admin failed");
+            session.setAttribute("errorMsgAdmin","Add new admin failed");
             return "/admin/registerAdmin";
     }
 
-    @PostMapping(value = "/admin/login")
+    @PostMapping({"/savePassword"})
+    public String savePasswordChange(@RequestParam("oldPassword") String oldPassword, @RequestParam("newPassword")String newPassword, HttpSession session) {
+        if (null != session.getAttribute("userId") && "admin".equals(session.getAttribute("role"))) {
+            Admin admin = adminService.loadAdmin((Long) session.getAttribute("userId"));
+            Boolean result = adminService.updatePassword(admin.getLoginName(), oldPassword, newPassword);
+            if (result) {
+                session.setAttribute("SuccessMsg","Password changed");
+                return "redirect:/mainPage";
+            }
+        }
+        else
+            session.setAttribute("errorMsgAdmin","Password change failed");
+        return "/admin/changePassword";
+    }
+
+    @PostMapping(value = "/login")
     public String loginAdmin(@RequestParam("loginName") String loginName,
                              @RequestParam("password") String password,
                              HttpSession session) {
         Logger log = org.slf4j.LoggerFactory.getLogger(this.getClass());
-
         try {
             Admin admin = adminService.login(loginName, password);
+            if(null==admin){
+                session.setAttribute("errorMsgAdmin","Can't find admin with this combination");
+                return "redirect:/admin/login";
+            }
             session.setAttribute("userId", admin.getId());
             session.setAttribute("role", admin.getRole());
-            session.removeAttribute("errorMsg");
+            session.removeAttribute("errorMsgAdmin");
             String redirect = (String) session.getAttribute("redirectTo")==null?"/main":(String) session.getAttribute("redirectTo");
             //keep session alive for 7200 second
             session.setMaxInactiveInterval(60 * 60 * 2);
-            session.removeAttribute("errorMsg");
             return "redirect:"+redirect;
         }
         catch (Exception e){
-            session.setAttribute("errorMsg", e.getMessage());
+            session.setAttribute("errorMsgAdmin", e.getMessage());
             log.error(e.getMessage());
             return "redirect:/admin/login";
         }
     }
 
-    @PostMapping(value = "/admin/changePassword")
+    @PostMapping(value = "/changePassword")
     public String changePassword(@RequestParam("originalPassword") String originalPassword,
                                  @RequestParam("newPassword") String newPassword,
                                  HttpSession session) {
 
         if(null==session.getAttribute("userId") || !"admin".equals(session.getAttribute("role"))){
-            session.setAttribute("errorMsg","Please log in before change password");
+            session.setAttribute("errorMsgAdmin","Please log in before change password");
             return "admin/login";
         }
 
         String loginName = adminService.loadAdmin((Long) session.getAttribute("userId")).getLoginName();
         Boolean result = adminService.updatePassword(loginName,originalPassword,newPassword);
         if (result){
-            session.setAttribute("successMsg","Password updated");
+            session.setAttribute("successMsgAdmin","Password updated");
         }
         else
-            session.setAttribute("errorMsg","Original Password did not match, please try again");
+            session.setAttribute("errorMsgAdmin","Original Password did not match, please try again");
         return "admin/changePassword";
     }
 
 
     @ResponseBody
-    @RequestMapping(value = "/admin/customerList", method = RequestMethod.GET)
+    @RequestMapping(value = "/customerList", method = RequestMethod.GET)
     public Result list(@RequestParam Map<String, Object> params) {
         Result result = new Result();
         if (StringUtils.isEmpty(params.get("page")) || StringUtils.isEmpty(params.get("limit"))) {

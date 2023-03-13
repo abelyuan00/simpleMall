@@ -2,11 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="header-fragment">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" th:href="@{dist/img/gearIcon.png}"/>
   <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
   <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
   <link rel="stylesheet" href="../../plugins/fontawesome-free/css/v4-shims.min.css">
   <link rel="stylesheet" href="../../plugins/jqgrid/ui.jqgrid-bootstrap4.css" />
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 </head>
 <body class="hold-transition sidebar-mini">
@@ -23,36 +23,110 @@
       </div><!-- /.container-fluid -->
     </div>
     <!-- Main content -->
-    <div class="content">
+    <div class="content" th:if="${#httpServletRequest.getSession(false) != null}">
+    <div class="content" th:if="${#session.getAttribute('role') != null and #session.getAttribute('role') == 'admin'}">
+      <div th:if="${not #strings.isEmpty(session.errorMsg)}" class="form-group">
+        <div class="alert alert-danger" th:text="${session.errorMsg}"></div>
+      </div>
+      <div id="success-msg" th:if="${not #strings.isEmpty(session.successMsg)}" class="form-group">
+        <div class="alert alert-danger" th:text="${session.successMsg}"></div>
+      </div>
       <div class="card card-primary card-outline">
+        <div class="card-header">
+          <nav>
+            <span class="brand-text font-weight-light">Admin options</span>
+          </nav>
+        </div> <!-- /.card-body -->
+        <div class="card-body">
+          <div class="grid-btn">
+            <div class="small-box bg-info">
+              <div class="inner">
+                <h3>Change password</h3>
+              </div>
+              <div class="icon">
+                <i class="ion ion-document"></i>
+              </div>
+              <a href="/admin/changePassword" class="small-box-footer">START <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <div class="grid-btn">
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>Information edit</h3>
+              </div>
+              <div class="icon">
+                <i class="ion ion-edit"></i>
+              </div>
+              <a href="/admin/editAdmin" class="small-box-footer">START <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <div class="grid-btn">
+            <div class="small-box bg-info">
+              <div class="inner">
+                <h3>Customer manage</h3>
+              </div>
+              <div class="icon">
+                <i class="ion ion-document"></i>
+              </div>
+              <a href="#" class="small-box-footer">START <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <div class="grid-btn">
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>Product Add</h3>
+              </div>
+              <div class="icon">
+                <i class="ion ion-edit"></i>
+              </div>
+              <a href="#" class="small-box-footer">START <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <div class="grid-btn">
+            <div class="small-box bg-info">
+              <div class="inner">
+                <h3>Server manage</h3>
+              </div>
+              <div class="icon">
+                <i class="ion ion-document"></i>
+              </div>
+              <a href="#" class="small-box-footer">START <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+<!--          <nav>-->
+<!--            <button onclick="window.location.href='admin/adminManage'">Admin Manage</button>-->
+<!--          </nav>-->
+<!--          <p>  </p>-->
+<!--          <nav>-->
+<!--            <button onclick="window.location.href='admin/adminManage'">Admin Manage</button>-->
+<!--          </nav>-->
+        </div>
+      </div>
 
+    </div><!-- /.container-fluid -->
+    <div class="content" th:if="${#session.getAttribute('role') != null and #session.getAttribute('role') == 'customer'}">
+      <div class="card card-primary card-outline">
         <div class="card-header">
           <nav>
             <a th:href="@{/}" class="brand-link"></a>
-            <span class="brand-text font-weight-light">Title</span>
+            <span class="brand-text font-weight-light">Customer options</span>
           </nav>
         </div> <!-- /.card-body -->
         <div class="card-body">
           <div class="grid-btn">
             <nav>
-              <button onclick="window.location.href='admin/customerManage'">Customer Manage</button>
-            </nav>
-            <nav>
               <a th:href="@{/admin/product}" class="brand-link"> product</a>
             </nav>
           </div>
         </div>
-
       </div><!-- /.container-fluid -->
     </div>
-
-
-        </div>
-
-      </div><!-- /.container-fluid -->
     </div>
-    <!-- /.content -->
   </div>
+</div><!-- /.container-fluid -->
+</div>
+    <!-- /.content -->
+</div>
   <!-- /.content-wrapper -->
 </div>
   <div th:replace="footer::footer-fragment"></div>

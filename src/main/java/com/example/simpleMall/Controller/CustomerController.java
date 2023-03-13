@@ -11,37 +11,43 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 @Controller
+@RequestMapping("/customer")
 public class CustomerController {
 
     @Resource
     CustomerService customerService;
 
-    @GetMapping({"/customer/login"})
+    @GetMapping({"/login"})
     public String loginCustomer() {
         return "customer/loginCustomer";
     }
 
-    @GetMapping({"/customer/profile"})
+    @GetMapping({"/profile"})
     public String profileCustomer() {
         return "customer/profileCustomer";
     }
 
-    @GetMapping({"/customer/register"})
+    @GetMapping({"/register"})
     public String registerCustomer() {
         return "customer/registerCustomer";
     }
 
-    @GetMapping({"/customer/downloadFile"})
+    @GetMapping({"/downloadFile"})
     public String downloadFile() {
         return "customer/downloadFile";
     }
 
-    @GetMapping({"/customer/changePassword"})
+    @GetMapping({"/changePassword"})
     public String changePassword() {
         return "customer/changePassword";
     }
 
-    @PostMapping(value = "/customer/login")
+    @GetMapping("/2048")
+    public String game(){
+        return "2048Game";
+    }
+
+    @PostMapping(value = "/login")
     public String loginCustomer(@RequestParam("loginName") String loginName,
                                 @RequestParam("password") String password,
                                 HttpSession session) {
@@ -51,23 +57,27 @@ public class CustomerController {
             if (customer != null) {
                 session.setAttribute("userId", customer.getId());
                 session.setAttribute("role", customer.getRole());
-                session.removeAttribute("errorMsg");
+                session.removeAttribute("errorMsgCustomer");
                 //keep session alive for 7200 second
                 session.setMaxInactiveInterval(60 * 60 * 2);
-                String redirect = (String) session.getAttribute("redirectTo") ==null? "/main":(String) session.getAttribute("redirectTo") ;
+                String redirect = "/main";
+                if(null!=session.getAttribute("redirectTo")) {
+                    redirect = (String) session.getAttribute("redirectTo");
+                    session.removeAttribute("redirectTo");
+                }
                 return "redirect:"+redirect;
             }
             else {
-                session.setAttribute("errorMsg", "Can't find the combination");
+                session.setAttribute("errorMsgCustomer", "Can't find user, please check your login name or password");
                 return "customer/loginCustomer";
             }
         }
         catch (Exception e){
             if(e.getCause() instanceof NullPointerException){
-                session.setAttribute("errorMsg", "Can not find user with given name");
+                session.setAttribute("errorMsgCustomer", "Can not find user with given combination");
             }
             else
-                session.setAttribute("errorMsg", "Error occurred, Please contact admin");
+                session.setAttribute("errorMsgCustomer", "Error occurred, Please contact admin");
             log.error(e.getMessage());
             return "customer/loginCustomer";
         }
@@ -75,7 +85,7 @@ public class CustomerController {
 
 
 
-    @PostMapping(value = "/customer/changePassword")
+    @PostMapping(value = "/changePassword")
     public String changePassword(@RequestParam("originalPassword") String originalPassword,
                                  @RequestParam("newPassword") String newPassword,
                                  HttpSession session) {
@@ -94,7 +104,7 @@ public class CustomerController {
         return "customer/changePassword";
     }
 
-    @GetMapping("/customer/getSubInfo")
+    @GetMapping("/getSubInfo")
     public synchronized String getSubInfo(HttpSession session){
         if(null==session.getAttribute("userId") || !"customer".equals(session.getAttribute("role"))){
             session.setAttribute("errorMsg","Please log in");
@@ -103,5 +113,24 @@ public class CustomerController {
         return customerService.getSubInfo(session);
     }
 
+//    @PostMapping(value = "/customer/register/submitInfo")
+//    public String saveRegisterInfo(@RequestParam("loginName") String loginName,
+//                                   @RequestParam("email") String email,
+//                                   @RequestParam("password") String password,
+//                                    HttpSession session) {
+//
+//        if(null==session.getAttribute("userId") || !"customer".equals(session.getAttribute("role"))){
+//            session.setAttribute("errorMsg","Please log in before change password");
+//            return "customer/changePassword";
+//        }
+//        String loginName = customerService.loadCustomer((Long) session.getAttribute("userId")).getLoginName();
+//        Boolean result = customerService.(loginName,originalPassword,newPassword);
+//        if (result){
+//            session.setAttribute("successMsg","Password updated");
+//        }
+//        else
+//            session.setAttribute("errorMsg","Original Password did not match, please try again");
+//        return "main";
+//    }
 
 }

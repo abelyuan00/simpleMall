@@ -39,7 +39,7 @@ public class IndexController {
     @GetMapping({"/logout"})
     public String logout(HttpSession session) {
         session.invalidate();
-        return "redirect:/main";
+        return "redirect:/index";
     }
 
     @GetMapping("/product")
@@ -52,10 +52,7 @@ public class IndexController {
         return "customer/chartjs";
     }
 
-    @GetMapping("/2048")
-    public String game(){
-        return "2048Game";
-    }
+
 
     @GetMapping ("/getUserIconPath")
     @ResponseBody
@@ -69,11 +66,11 @@ public class IndexController {
         if(null!=session.getAttribute("userId") && null!=session.getAttribute("role")) {
             if ("admin".equals(session.getAttribute("role"))) {
                 admin = adminService.loadAdmin(id);
-                iconPath = admin.getIconPath() == null? "dist/img/minions.jpg" :admin.getIconPath() ;
+                iconPath = admin.getIconPath() == null? "/dist/img/minions.jpg" :admin.getIconPath() ;
                 userName = admin.getNickname();
             } else if ("customer".equals(session.getAttribute("role"))){
                 customer = customerService.loadCustomer(id);
-                iconPath = customer.getIconPath() == null? "dist/img/minions.jpg": customer.getIconPath();
+                iconPath = customer.getIconPath() == null? "/dist/img/minions.jpg": customer.getIconPath();
                 userName = customer.getNickname();
             }
         }

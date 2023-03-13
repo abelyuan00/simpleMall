@@ -36,10 +36,16 @@ public class AdminServiceImplementation implements AdminService {
         String storedPassword = null;
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         try {
-            storedPassword = userDao.findAdmin(loginName).getPassword();
+            Admin target = userDao.findAdmin(loginName);
+            if(null == target){
+                return null;
+            }
+            else
+                storedPassword = target.getPassword();
         } catch (Exception e){
             throw new RuntimeException(e);
         }
+
         Boolean isPasswordMatches = encoder.matches(password,storedPassword);
 
         if (!isPasswordMatches)

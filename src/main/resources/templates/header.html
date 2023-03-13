@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="header-fragment">
-    <title>Demo Web</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Managing board</title>
     <!-- The <meta> tag defines metadata about an HTML document. -->
     <!--  The viewport is the user's visible area of a web page.-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" th:href="@{/dist/img/AdminLTELogo.png}"/>
     <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
 
 </head>
@@ -21,10 +19,13 @@
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="/index" class="nav-link">Home</a>
+            <a href="/main" class="nav-link">Home</a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
             <a href="../../contacts.html" class="nav-link">Contact</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a th:href="@{/customer/2048}" class="nav-link">Have fun</a>
         </li>
     </ul>
     <!-- Right navbar links -->
@@ -46,7 +47,7 @@
         </li>
         <li class="nav-item dropdown">
             <a class="nav-link" th:href="@{/logout}">
-                <i class="fa fa-atom">&nbsp;log out</i>
+                <i class="fa fa-atom">&nbsp;Log out</i>
             </a>
         </li>
     </ul>

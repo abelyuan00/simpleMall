@@ -77,7 +77,14 @@ public class CustomerServiceImplementation implements CustomerService {
     }
 
     @Override
-    public Boolean registerCustomer(String newLoginName, String password, String email, String customerName, String address) {
+    public Boolean registerCustomer(String newLoginName, String password, String email) throws Exception{
+        try{
+            Customer customer = new Customer();
+            userDao.insertCustomer(customer);
+        }
+        catch (Exception e){
+            throw e;
+        }
         return null;
     }
 

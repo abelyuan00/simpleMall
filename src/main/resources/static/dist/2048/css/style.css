@@ -107,6 +107,17 @@ h1.title {
     border-radius: 3px;
     font-weight: bold;
 }
+.home-btn {
+    margin: 5px 0 0 5px;
+    float: right;
+    padding: 0 8px;
+    background: #538ED5;
+    color: white;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 3px;
+    font-weight: bold;
+}
 
 h2.subtitle {
     font-size: 1em;
