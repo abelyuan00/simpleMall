@@ -1,6 +1,5 @@
 package com.example.simpleMall.Entity;
 
-import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
