@@ -55,10 +55,11 @@ public sealed class User permits Admin, Customer {
 
     //customer or admin
     @Column
-    private String role = "customer";
+    private String role;
 
     @Column
     private String iconPath;
+
 
 
     public void generateCode(){

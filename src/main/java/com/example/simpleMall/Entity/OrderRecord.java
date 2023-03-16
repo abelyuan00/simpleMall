@@ -36,7 +36,7 @@ public class OrderRecord {
 
     /**
      * status of order
-     * ORDERED - PAID - WAITING - RECEIVED - COMPLETED - CLOSED
+     * ORDERED - SHIPPED - RECEIVED - COMPLETED
      */
     @Column
     @NotNull

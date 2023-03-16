@@ -7,6 +7,11 @@
         <result property="code" column="code"/>
         <result property="loginName" column="login_name"/>
         <result property="password" column="password"/>
+        <result property="iconPath" jdbcType="VARCHAR" column="icon_path"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="createdTime" column="created_time"/>
+        <result property="status" jdbcType="VARCHAR" column="status"/>
+        <result property="role" jdbcType="VARCHAR" column="role"/>
     </resultMap>
 
     <resultMap type="com.example.simpleMall.Entity.Customer" id="CustomerListResult">
@@ -30,13 +35,8 @@
         <result property="role" jdbcType="VARCHAR" column="role"/>
         <result property="status" jdbcType="VARCHAR" column="status"/>
         <result property="updateTime" column="update_time"/>
-        <result property="adminCode" jdbcType="VARCHAR" column="admin_code"/>
         <result property="iconPath" jdbcType="VARCHAR" column="icon_path"/>
     </resultMap>
-
-    <sql id="Base_Column_List">
-        id,login_name,code,password,admin_code,role,status,created_time
-    </sql>
 
 
 
@@ -57,8 +57,8 @@
     </delete>
 
     <insert id="insertAdmin" parameterType="com.example.simpleMall.Entity.Admin">
-        insert into admin(login_name,password,code,role,status,email,nickname,uuid,created_time,update_time)
-        values(#{loginName},#{password},#{code},#{role},#{status},#{email},#{nickname},#{uuid},CURRENT_TIME,CURRENT_TIME)
+        insert into admin(login_name,password,code,role,status,email,nickname,created_time,update_time)
+        values(#{loginName},#{password},#{code},#{role},#{status},#{email},#{nickname},CURRENT_TIME,CURRENT_TIME)
     </insert>
 
     <update id="updateAdmin" parameterType="com.example.simpleMall.Entity.Admin">
