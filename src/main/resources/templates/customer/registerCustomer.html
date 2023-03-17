@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Simple Mall | Registration Page</title>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -14,7 +14,9 @@
   <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <link rel="stylesheet" href="../../plugins/fontawesome-free/css/fontawesome.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="../../dist/css/adminlte.min.css"><script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="../../dist/js/registerCustomer.js"></script>
 </head>
 <body class="hold-transition register-page">
 <div class="register-box">
@@ -25,7 +27,7 @@
   <div class="card">
     <div class="card-body register-card-body">
       <p class="login-box-msg">Become a new customer</p>
-      <form id="registerForm" th:action="@{/customer/register/submitInfo}" method="post">
+      <form id="register-form" th:action="@{/customer/register/submitInfo}" method="post">
 <!--        <div th:if="${not #strings.isEmpty(session.errorMsg)}" class="form-group">-->
 <!--          <div class="alert alert-danger" th:text="${session.errorMsg}"></div>-->
 <!--        </div>-->
@@ -38,7 +40,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="email" class="form-control" placeholder="Email" required="true">
+          <input type="email" id="email" class="form-control" placeholder="Email" required="true">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -46,7 +48,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" id="txtNewPassword" class="form-control" placeholder="Password" required="true">
+          <input type="password" id="password" class="form-control" placeholder="Password" required="true">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -54,7 +56,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" id="txtConfirmPassword" class="form-control" placeholder="Retype password" required="true">
+          <input type="password" id="confirm-password" class="form-control" placeholder="Retype password" required="true">
 
           <div class="input-group-append">
             <div class="input-group-text">
@@ -68,7 +70,7 @@
         <div class="row">
           <!-- /.col -->
           <div class="col-4">
-            <button id="submitBtn" class="btn btn-primary btn-block btn-flat" onclick="onSubmit">Register</button>
+            <button id="submitBtn" class="btn btn-primary btn-block btn-flat" onclick="onSubmit(event)">Register</button>
           </div>
           <!-- /.col -->
         </div>
@@ -87,23 +89,7 @@
 <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-<script src="../../dist/js/registerCustomer.js"></script>
-<script>
-    function onSubmit() {
-        // Validate the reCAPTCHA response
-        var form = document.getElementById("registerForm");
-        var recaptchaResponse = grecaptcha.getResponse();
-        if (recaptchaResponse.length == 0) {
-            // The reCAPTCHA was not validated
-            alert("Please complete the reCAPTCHA");
-            return false;
-        }
-        // The reCAPTCHA was validated, submit the form
-        form.submit();
-    }
 
-</script>
 
 </body>
 </html>
