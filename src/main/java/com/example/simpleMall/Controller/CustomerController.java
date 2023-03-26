@@ -4,6 +4,7 @@ import com.example.simpleMall.Entity.Customer;
 import com.example.simpleMall.service.CustomerService;
 import lombok.Synchronized;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,8 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/customer")
 public class CustomerController {
 
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomerController.class);
     @Resource
     CustomerService customerService;
 
@@ -113,24 +116,26 @@ public class CustomerController {
         return customerService.getSubInfo(session);
     }
 
-//    @PostMapping(value = "/customer/register/submitInfo")
-//    public String saveRegisterInfo(@RequestParam("loginName") String loginName,
-//                                   @RequestParam("email") String email,
-//                                   @RequestParam("password") String password,
-//                                    HttpSession session) {
-//
-//        if(null==session.getAttribute("userId") || !"customer".equals(session.getAttribute("role"))){
-//            session.setAttribute("errorMsg","Please log in before change password");
-//            return "customer/changePassword";
-//        }
-//        String loginName = customerService.loadCustomer((Long) session.getAttribute("userId")).getLoginName();
-//        Boolean result = customerService.(loginName,originalPassword,newPassword);
-//        if (result){
-//            session.setAttribute("successMsg","Password updated");
-//        }
-//        else
-//            session.setAttribute("errorMsg","Original Password did not match, please try again");
-//        return "main";
-//    }
+    @PostMapping(value = "/register/submitInfo")
+    public String saveRegisterInfo(@RequestParam("loginName") String loginName,
+                                   @RequestParam("email") String email,
+                                   @RequestParam("password") String password,
+                                    HttpSession session) throws Exception {
+
+        try {
+            Boolean result = customerService.registerCustomer(loginName,password,email);
+            if(result) {
+                session.setAttribute("successMsg", "Successfully registered");
+            }
+            else
+                session.setAttribute("errorMsg","Registration failed please try again ");
+            return "/customer/loginCustomer";
+        }
+        catch(Exception e) {
+            LOGGER.error("Error occurred while processing request", e.getMessage());
+            session.setAttribute("errorMsg", "Error occurred, Please try again");
+            throw e;
+        }
+    }
 
 }

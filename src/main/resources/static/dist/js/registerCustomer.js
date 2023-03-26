@@ -18,7 +18,7 @@
 }
 
     if (!recaptchaResponse) {
-    alert('Please tick the I\'m not a robot!');
+    alert('Please tick the \"I\'m not a robot!\"');
     return;
 }
     form.submit();

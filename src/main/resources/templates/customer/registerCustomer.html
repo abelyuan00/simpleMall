@@ -17,6 +17,15 @@
   <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="../../dist/js/registerCustomer.js"></script>
+    <script th:if="${not #strings.isEmpty(session.errorMsgCustomer)}" th:inline="javascript">
+        var errorMsg =  /*[[${session.errorMsgCustomer}]]*/ '' ;
+        if (errorMsg != '') {
+            if (!sessionStorage.getItem('errorDisplayed')) {
+                alert(errorMsg);
+                sessionStorage.setItem('errorDisplayed', 'true');
+            }
+        }
+    </script>
 </head>
 <body class="hold-transition register-page">
 <div class="register-box">
@@ -32,7 +41,7 @@
 <!--          <div class="alert alert-danger" th:text="${session.errorMsg}"></div>-->
 <!--        </div>-->
         <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="Name" required="true">
+          <input type="text" class="form-control" id="loginName" name="loginName" placeholder="Login name" required="true">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-user"></span>
@@ -40,7 +49,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="email" id="email" class="form-control" placeholder="Email" required="true">
+          <input type="email" id="email" class="form-control" name="email" placeholder="Email" required="true">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -48,7 +57,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" id="password" class="form-control" placeholder="Password" required="true">
+          <input type="password" id="password" class="form-control" name="password" placeholder="Password" required="true">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -90,6 +99,15 @@
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
 
+<script>
+    // get a reference to the form
+    const form = document.querySelector('form');
 
+    // add a submit event listener to the form
+    form.addEventListener('submit', function() {
+        // clear the sessionStorage
+        sessionStorage.clear();
+    });
+</script>
 </body>
 </html>
