@@ -22,4 +22,6 @@ public interface CustomerService {
     Boolean registerCustomer(@RequestParam String loginName, @RequestParam String password,@RequestParam String email) throws Exception;
 
     String getSubInfo(HttpSession session);
+
+    Boolean resetPassword(String loginName, String email, String nickname);
 }

@@ -7,6 +7,7 @@ import com.example.simpleMall.Entity.Customer;
 //import com.example.simpleMall.Entity.CustomerResources;
 import com.example.simpleMall.Entity.CustomerResources;
 import com.example.simpleMall.service.CustomerService;
+import com.example.simpleMall.service.EmailService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,9 @@ public class CustomerServiceImplementation implements CustomerService {
 
     @Resource
     private UserLogin userLogin;
+
+    @Resource
+    EmailService emailService;
 
     @Override
     public Customer login(String loginName, String password) {
@@ -102,5 +106,15 @@ public class CustomerServiceImplementation implements CustomerService {
         }
         CustomerResources customerResources = userDao.getCustomerResources(customerId);
         return "customer/downloadFile";
+    }
+
+    @Override
+    public Boolean resetPassword(String loginName, String email, String nickname) {
+
+        Customer customer;
+        String subject = "Account Password Reset";
+        StringBuilder emailBody = new StringBuilder();
+        Boolean result = emailService.sendEmail(email, subject,emailBody);
+        return null;
     }
 }

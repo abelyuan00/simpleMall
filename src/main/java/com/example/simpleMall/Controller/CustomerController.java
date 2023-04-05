@@ -2,13 +2,19 @@ package com.example.simpleMall.Controller;
 
 import com.example.simpleMall.Entity.Customer;
 import com.example.simpleMall.service.CustomerService;
+import com.example.simpleMall.service.EmailService;
 import lombok.Synchronized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -19,6 +25,10 @@ public class CustomerController {
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomerController.class);
     @Resource
     CustomerService customerService;
+
+
+
+
 
     @GetMapping({"/login"})
     public String loginCustomer() {
@@ -48,6 +58,11 @@ public class CustomerController {
     @GetMapping("/2048")
     public String game(){
         return "2048Game";
+    }
+
+    @GetMapping({"/forgotPassword"})
+    public String forgetPassword() {
+        return "customer/forgotPasswordCustomer";
     }
 
     @PostMapping(value = "/login")
@@ -87,6 +102,21 @@ public class CustomerController {
     }
 
 
+
+
+    @PostMapping(value = "/resetPassword")
+    public String resetPassword(String loginName, String email, String nickname, HttpSession session) throws Exception {
+
+
+        Boolean result = customerService.resetPassword(loginName,email,nickname);
+
+        if (result){
+            session.setAttribute("successMsgCustomer","Your password have been reset, please check your email inbox(and spam).");
+        }
+        else
+            session.setAttribute("errorMsgCustomer","The information you provided seems wrong, please try again");
+        return "customer/changePassword";
+    }
 
     @PostMapping(value = "/changePassword")
     public String changePassword(@RequestParam("originalPassword") String originalPassword,
