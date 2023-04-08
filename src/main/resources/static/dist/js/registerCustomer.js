@@ -5,9 +5,7 @@
 
     const loginName = document.getElementById('loginName');
     const email=document.getElementById('email').value;
-
-    const confirmPasswordInput = document.getElementById('confirm-password');
-    const recaptchaResponse = grecaptcha.getResponse();
+    const nickname=document.getElementById('nickname').value;
 
 
      if (!isValidEmail(email)) {
@@ -25,16 +23,6 @@
          alert('You need a longer name');
          return;
      }
-
-    if (passwordInput.value !== confirmPasswordInput.value) {
-    alert('Password and Confirm Password do not match!');
-    return;
-}
-
-    if (!recaptchaResponse) {
-    alert('Please tick the \"I\'m not a robot!\"');
-    return;
-}
     form.submit();
 }
 

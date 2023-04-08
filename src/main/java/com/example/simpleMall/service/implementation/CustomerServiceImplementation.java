@@ -8,6 +8,8 @@ import com.example.simpleMall.Entity.Customer;
 import com.example.simpleMall.Entity.CustomerResources;
 import com.example.simpleMall.service.CustomerService;
 import com.example.simpleMall.service.EmailService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +32,8 @@ public class CustomerServiceImplementation implements CustomerService {
 
     @Resource
     EmailService emailService;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomerService.class);
 
     @Override
     public Customer login(String loginName, String password) {
@@ -54,6 +58,7 @@ public class CustomerServiceImplementation implements CustomerService {
         try {
             customer = userDao.findCustomerById(userId);
         } catch (Exception e){
+            LOGGER.error(e.getMessage());
             throw new RuntimeException(e);
         }
         return customer;
@@ -67,6 +72,7 @@ public class CustomerServiceImplementation implements CustomerService {
         try {
             customer = userDao.findCustomer(loginName);
         } catch (Exception e){
+            LOGGER.error(e.getMessage());
             throw new RuntimeException(e);
         }
 
@@ -92,6 +98,8 @@ public class CustomerServiceImplementation implements CustomerService {
             return true;
         }
         catch (Exception e){
+            e.printStackTrace();
+
             throw e;
         }
     }
@@ -111,10 +119,16 @@ public class CustomerServiceImplementation implements CustomerService {
     @Override
     public Boolean resetPassword(String loginName, String email, String nickname) {
 
-        Customer customer;
+        try {
+            Customer customer = userDao.findCustomer(loginName);
+        }catch (Exception e){
+            e.printStackTrace();
+            LOGGER.error(e.getMessage());
+            return false;
+        }
         String subject = "Account Password Reset";
         StringBuilder emailBody = new StringBuilder();
         Boolean result = emailService.sendEmail(email, subject,emailBody);
-        return null;
+        return true;
     }
 }
