@@ -92,7 +92,7 @@ public class AdminServiceImplementation implements AdminService {
             return true;
         }
         catch (Exception e){
-            return false;
+            throw e;
         }
     }
 

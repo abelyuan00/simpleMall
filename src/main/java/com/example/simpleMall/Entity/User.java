@@ -1,6 +1,5 @@
 package com.example.simpleMall.Entity;
 
-import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -56,10 +55,11 @@ public sealed class User permits Admin, Customer {
 
     //customer or admin
     @Column
-    private String role = "customer";
+    private String role;
 
     @Column
     private String iconPath;
+
 
 
     public void generateCode(){

@@ -21,8 +21,10 @@ public class LogInWebMvcConfigurer implements WebMvcConfigurer {
         registry.addInterceptor(loginInterceptor)
                 .addPathPatterns("/admin/**")
                 .excludePathPatterns("/admin/login")
+                .excludePathPatterns("/admin/forgotPassword")
                 .addPathPatterns("/customer/**")
                 .excludePathPatterns("/customer/register/**")
+                .excludePathPatterns("/customer/forgotPassword")
                 .excludePathPatterns("/customer/login");
     }
 }
