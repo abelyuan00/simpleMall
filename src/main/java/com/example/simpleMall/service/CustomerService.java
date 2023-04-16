@@ -19,9 +19,9 @@ public interface CustomerService {
 
     Boolean updatePassword(String loginName, String passwordOld, String passwordNew);
 
-    Boolean registerCustomer(@RequestParam String loginName, @RequestParam String password,@RequestParam String email) throws Exception;
+    Boolean registerCustomer(@RequestParam String loginName, @RequestParam String password,@RequestParam String email,@RequestParam String customerName) throws Exception;
 
     String getSubInfo(HttpSession session);
 
-    Boolean resetPassword(String loginName, String email, String nickname);
+    Boolean resetPassword(String loginName, String email, String customerName);
 }

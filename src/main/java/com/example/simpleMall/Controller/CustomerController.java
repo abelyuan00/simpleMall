@@ -105,10 +105,10 @@ public class CustomerController {
 
 
     @PostMapping(value = "/resetPassword")
-    public String resetPassword(String loginName, String email, String nickname, HttpSession session) throws Exception {
+    public String resetPassword(String loginName, String email, String customerName, HttpSession session) throws Exception {
 
 
-        Boolean result = customerService.resetPassword(loginName,email,nickname);
+        Boolean result = customerService.resetPassword(loginName,email,customerName);
 
         if (result){
             session.setAttribute("successMsgCustomer","Your password have been reset, please check your email inbox(and spam).");
@@ -150,10 +150,11 @@ public class CustomerController {
     public String saveRegisterInfo(@RequestParam("loginName") String loginName,
                                    @RequestParam("email") String email,
                                    @RequestParam("password") String password,
+                                   @RequestParam("customerName") String customerName,
                                     HttpSession session) throws Exception {
 
         try {
-            Boolean result = customerService.registerCustomer(loginName,password,email);
+            Boolean result = customerService.registerCustomer(loginName,password,email,customerName);
             if(result) {
                 session.setAttribute("successMsg", "Successfully registered");
             }
@@ -162,7 +163,7 @@ public class CustomerController {
             return "/customer/loginCustomer";
         }
         catch(Exception e) {
-            LOGGER.error("Error occurred while processing request", e.getMessage());
+            LOGGER.error(e.getMessage());
             session.setAttribute("errorMsg", "Error occurred, Please try again");
             throw e;
         }

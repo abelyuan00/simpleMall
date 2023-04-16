@@ -1,6 +1,7 @@
 package com.example.simpleMall.Entity;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
 import javax.persistence.Column;
@@ -22,6 +23,10 @@ public non-sealed class Admin extends User{
 
     @Column(unique = true,nullable = false)
     private String email;
+
+    @Column
+    @NonNull
+    private String nickname;
 
 
 

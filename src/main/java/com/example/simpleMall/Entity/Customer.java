@@ -31,7 +31,8 @@ public non-sealed class Customer extends User{
     @Column
     private String name;
 
-    @Column(unique = true,nullable = false)
+    @Column(unique = true)
+    @NotNull
     private String email;
 
     public Customer() {

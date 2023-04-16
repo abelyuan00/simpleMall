@@ -29,7 +29,7 @@ public class IndexController {
 
     @GetMapping({"/main"})
     public String mainPage() {
-        return "mainPage";
+        return "main-page";
     }
 
     @GetMapping("/index")
@@ -52,6 +52,15 @@ public class IndexController {
         return "customer/chartjs";
     }
 
+    @GetMapping("/shopMain")
+    public String shopMain(){
+        return "shop/shop-main";
+    }
+
+    @GetMapping("/shop")
+    public String goShopping(){
+        return "shop/shop";
+    }
 
 
     @GetMapping ("/getUserIconPath")
@@ -71,7 +80,7 @@ public class IndexController {
             } else if ("customer".equals(session.getAttribute("role"))){
                 customer = customerService.loadCustomer(id);
                 iconPath = customer.getIconPath() == null? "/dist/img/minions.jpg": customer.getIconPath();
-                userName = customer.getNickname();
+                userName = customer.getName();
             }
         }
 

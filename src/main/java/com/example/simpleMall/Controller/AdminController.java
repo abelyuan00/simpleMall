@@ -75,9 +75,10 @@ public class AdminController {
         if(result){
             return "redirect:/mainPage";
         }
-        else
-            session.setAttribute("errorMsgAdmin","Add new admin failed");
+        else {
+            session.setAttribute("errorMsgAdmin", "Add new admin failed");
             return "/admin/registerAdmin";
+        }
     }
 
     @PostMapping({"/savePassword"})

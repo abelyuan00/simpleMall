@@ -87,13 +87,14 @@ public class CustomerServiceImplementation implements CustomerService {
     }
 
     @Override
-    public Boolean registerCustomer(String loginName, String password, String email) {
+    public Boolean registerCustomer(String loginName, String password, String email,String customerName) {
         try{
             Customer customer = new Customer();
             customer.setLoginName(loginName);
             customer.encodePassword(password);
             customer.generateCode();
             customer.setEmail(email);
+            customer.setName(customerName);
             userDao.insertCustomer(customer);
             return true;
         }
@@ -117,7 +118,7 @@ public class CustomerServiceImplementation implements CustomerService {
     }
 
     @Override
-    public Boolean resetPassword(String loginName, String email, String nickname) {
+    public Boolean resetPassword(String loginName, String email, String customerName) {
 
         try {
             Customer customer = userDao.findCustomer(loginName);

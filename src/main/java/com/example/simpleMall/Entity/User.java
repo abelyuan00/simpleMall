@@ -41,9 +41,6 @@ public sealed class User permits Admin, Customer {
 
     private String code;
 
-    @Column
-    @NonNull
-    private String nickname;
 
     @Column
     @NonNull
