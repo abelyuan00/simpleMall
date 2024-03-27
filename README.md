@@ -1,8 +1,9 @@
 # simpleMall
-spring boot base mall system for practice
 
-This project is currently under construction
+Spring-boot based e-commerce system.
 
-Front-end is based on AdminLTE framework
+Current progress: log in and register system done.
 
-2048 game is from https://github.com/gd4Ark/2048 
+Front-end is based on AdminLTE framework.
+
+2048 game is from https://github.com/gd4Ark/2048.
